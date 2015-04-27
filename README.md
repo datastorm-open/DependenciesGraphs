@@ -6,13 +6,13 @@ library("ibr")
 
 
 ##For all package :
-#Prepare data
+####Prepare data
 data<-VisFuns("package:ibr")
-#Graph
+####Graph
 visNetwork(data[[1]], data[[2]]) %>% visEdges(style = "arrow")
 
 ##For one fonction (iterchoiceS1)
-#Prepare data
+####Prepare data
 data<-VisFun("package:ibr","iterchoiceS1")
-#Graph
+####Graph
 visNetwork(data[[1]], data[[2]]) %>% visEdges(style = "arrow")
