@@ -10,5 +10,3 @@ License: Free
 LazyData: TRUE
 Depends: visNetwork,
     mvbutils
-Imports: visNetwork,
-    mvbutils
