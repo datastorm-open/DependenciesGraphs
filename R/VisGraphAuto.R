@@ -38,37 +38,37 @@ linksForOne <- function (envir, name.function){
   
   graphfun <- mvbutils::foodweb(where = envir, prune = name.function, descendents = F, plotting = F, ancestors = T)$funmat
   
-  while(length(which(rowSums(as.matrix(graphfun)) == 0)) != 1)
+  while(length(which(rowSums(as.matrix(graphfun)) == 0)) != 1 & length(which(rowSums(as.matrix(graphfun)) == 0)[-which(name.function == names(which(rowSums(as.matrix(graphfun)) == 0)))])>0)
   {
-    ligneasupr <- which(rowSums(graphfun) == 0)[-which(name.function == names(which(rowSums(graphfun) == 0)))]
+    ligneasupr <- which(rowSums(as.matrix(graphfun)) == 0)[-which(name.function == names(which(rowSums(as.matrix(graphfun)) == 0)))]
     graphfun <- graphfun[-ligneasupr, -ligneasupr]
   }
   
   ancestors <- mastersSlaves(as.matrix(graphfun))
   graphfun <- mvbutils::foodweb(where = envir, prune = name.function, descendents = T, plotting = F, ancestors = F)$funmat
   
-  while (length(which(colSums(as.matrix(graphfun)) == 0)) != 1)
+  while (length(which(colSums(as.matrix(graphfun)) == 0)) != 1 & length(which(colSums(as.matrix(graphfun)) == 0)[-which(name.function == names(which(colSums(as.matrix(graphfun)) == 0)))])>0)
   {
-    ligneasupr <- which(colSums(graphfun) == 0)[-which(name.function==names(which(colSums(graphfun) == 0)))]
+    ligneasupr <- which(colSums(as.matrix(graphfun)) == 0)[-which(name.function==names(which(colSums(as.matrix(graphfun)) == 0)))]
     graphfun <- graphfun[-ligneasupr,-ligneasupr]
   }
   
-  descendents<-mastersSlaves(as.matrix(graphfun))
-  
-  if(length(ancestors) == 1 || length(ancestors) == 0){ancestors=NULL}
-  if(length(descendents) == 1 || length(descendents) == 0){descendents=NULL}
-  
-  ancdsc <- data.frame(rbind(ancestors,descendents))
-  
-  options(warn = current.warn.option)
-  if(length(ancdsc)!=0)
-  {
-    colnames(ancdsc)=c("Master","Slaves")
-    return(ancdsc)
-  }
-  else{
-    return(NULL)
-  }
+descendents<-mastersSlaves(as.matrix(graphfun))
+
+if(length(ancestors) == 1 || length(ancestors) == 0){ancestors=NULL}
+if(length(descendents) == 1 || length(descendents) == 0){descendents=NULL}
+
+ancdsc <- data.frame(rbind(ancestors,descendents))
+
+options(warn = current.warn.option)
+if(length(ancdsc)!=0)
+{
+  colnames(ancdsc)=c("Master","Slaves")
+  return(ancdsc)
+}
+else{
+  return(NULL)
+}
 }
 
 #' Prepare data for graph visNetwork
@@ -77,18 +77,19 @@ linksForOne <- function (envir, name.function){
 #' @return List contain elements needed for visNetwork visualization
 #'
 #' @export
-prepareToVis <- function(link, functions = NULL){
+prepareToVis <- function(link, functions.list = NULL){
   Visdata <- list()
-  if(is.null(functions))
+  if(is.null(functions.list))
   {
     Nomfun <- unique(as.vector(unlist(c( link))))
     Nomfun <- data.frame(cbind(id=1:length(Nomfun),label=Nomfun))
   }else{
-    Nomfun <- functions
+    Nomfun <- functions.list
     Nomfun <- data.frame(cbind(id=1:length(Nomfun),label=Nomfun))
   }
   fromto <- matrix(0,ncol=2,nrow=dim( link)[1])
-  
+  delete <- sort(unique(as.character(link[,1], link[,2])))[which(sort(unique(as.character(link[, 1],link[, 2]))) %in% sort(unique(as.character(Nomfun[, 2])))-1 == -1)]
+  link <- link[-unique(c(which(link[, 1]==delete), which(link[, 2] == delete))), ]
   for(i in 1:dim( link)[1])
   {
     fromto[i,1] <- which(as.character( link[i,2])==Nomfun[,2])
@@ -133,9 +134,11 @@ funDependencies <- function(envir, name.function)
 envirDependencies <- function(envir)
 {
   name.functions <- allFunctionEnv(envir)
-
-  toutfonc <- do.call("rbind", lapply( name.functions, function(x){
-    linksForOne(envir,x)})
+  
+  toutfonc <- do.call("rbind", lapply( 
+    name.functions, function(x){
+      print(x)
+      linksForOne(envir,x)})
   )
   
   visdata <- prepareToVis(unique(toutfonc), name.functions)
