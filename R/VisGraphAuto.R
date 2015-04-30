@@ -53,29 +53,29 @@ linksForOne <- function (envir, name.function){
     graphfun <- graphfun[-ligneasupr,-ligneasupr]
   }
   
-descendents<-mastersSlaves(as.matrix(graphfun))
-
-if(length(ancestors) == 1 || length(ancestors) == 0){ancestors=NULL}
-if(length(descendents) == 1 || length(descendents) == 0){descendents=NULL}
-
-ancdsc <- data.frame(rbind(ancestors,descendents))
-
-options(warn = current.warn.option)
-if(length(ancdsc)!=0)
-{
-  colnames(ancdsc)=c("Master","Slaves")
-  return(ancdsc)
+  descendents<-mastersSlaves(as.matrix(graphfun))
+  
+  if(length(ancestors) == 1 || length(ancestors) == 0){ancestors=NULL}
+  if(length(descendents) == 1 || length(descendents) == 0){descendents=NULL}
+  
+  ancdsc <- data.frame(rbind(ancestors,descendents))
+  
+  options(warn = current.warn.option)
+  if(length(ancdsc)!=0)
+  {
+    colnames(ancdsc)=c("Master","Slaves")
+    return(ancdsc)
+  }
+  else{
+    return(NULL)
+  }
 }
-else{
-  return(NULL)
-}
-}
 
 
 
-#' For a function, give all dependencies
+#' For a environnement, give all dependencies
 #' @param envir : environment where the function should search dependencies.
-#' @param name.function : function name (character)
+#' 
 #' @return Dataframe with two columns, 'master'and 'slave'
 #' 
 #' @importFrom mvbutils foodweb
@@ -88,12 +88,12 @@ linksForAll <- function (envir){
   
   graphfun <- mvbutils::foodweb(where = envir, descendents = F, plotting = F, ancestors = T)$funmat
   
-
+  
   
   ancestors <- mastersSlaves(as.matrix(graphfun))
   graphfun <- mvbutils::foodweb(where = envir, descendents = T, plotting = F, ancestors = F)$funmat
   
-
+  
   descendents<-mastersSlaves(as.matrix(graphfun))
   
   if(length(ancestors) == 1 || length(ancestors) == 0){ancestors=NULL}
@@ -129,17 +129,28 @@ prepareToVis <- function(link, functions.list = NULL){
     Nomfun <- functions.list
     Nomfun <- data.frame(cbind(id=1:length(Nomfun),label=Nomfun))
   }
-  fromto <- matrix(0,ncol=2,nrow=dim( link)[1])
-  delete <- sort(unique(as.character(link[,1], link[,2])))[which(sort(unique(as.character(link[, 1],link[, 2]))) %in% sort(unique(as.character(Nomfun[, 2])))-1 == -1)]
-  if(length(delete)>0)
+  fromto <- matrix(0,ncol=dim( link)[2],nrow=dim( link)[1])
+  func.link<-sort(unique(c(as.character(link[, 1]),as.character(link[, 2]))))
+  func.nom<-sort(unique(as.character(Nomfun[, 2])))
+  if(!is.null(Nomfun))
   {
-  link <- link[-unique(c(which(link[, 1]==delete), which(link[, 2] == delete))), ]
+    func.prob<-func.link[which(!func.link%in%func.nom)]
+    
+    if(length(func.prob)>0)
+    {
+      link <- link[-unique(c(which(link[, 1] %in% func.prob), which(link[, 2] %in% func.prob))), ]
+    }
   }
   for(i in 1:dim( link)[1])
   {
     fromto[i,1] <- which(as.character( link[i,2])==Nomfun[,2])
     fromto[i,2] <- which(as.character( link[i,1])==Nomfun[,2])
+    if(dim( link)[2]>2)
+    {
+      fromto[i,3:length(link[i,])] <- link[which(as.character( link[i,2])==Nomfun[,2]),3:length(link[i,])]
+    }
   }
+  
   fromto <- data.frame(fromto)
   names(fromto) <- c("from","to")
   Visdata$Nomfun <- Nomfun
