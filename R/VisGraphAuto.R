@@ -71,6 +71,48 @@ else{
 }
 }
 
+
+
+#' For a function, give all dependencies
+#' @param envir : environment where the function should search dependencies.
+#' @param name.function : function name (character)
+#' @return Dataframe with two columns, 'master'and 'slave'
+#' 
+#' @importFrom mvbutils foodweb
+#' 
+#' @export
+linksForAll <- function (envir){
+  
+  current.warn.option <- options("warn")$warn
+  options(warn = -1)
+  
+  graphfun <- mvbutils::foodweb(where = envir, descendents = F, plotting = F, ancestors = T)$funmat
+  
+
+  
+  ancestors <- mastersSlaves(as.matrix(graphfun))
+  graphfun <- mvbutils::foodweb(where = envir, descendents = T, plotting = F, ancestors = F)$funmat
+  
+
+  descendents<-mastersSlaves(as.matrix(graphfun))
+  
+  if(length(ancestors) == 1 || length(ancestors) == 0){ancestors=NULL}
+  if(length(descendents) == 1 || length(descendents) == 0){descendents=NULL}
+  
+  ancdsc <- data.frame(rbind(ancestors,descendents))
+  
+  options(warn = current.warn.option)
+  if(length(ancdsc)!=0)
+  {
+    colnames(ancdsc)=c("Master","Slaves")
+    return(ancdsc)
+  }
+  else{
+    return(NULL)
+  }
+}
+
+
 #' Prepare data for graph visNetwork
 #' @param  link : Dataframe, two colums, the first is master, the second is slaves
 #' @param functions : All functions to includes in graph (default : union(masters & slaves))
@@ -89,7 +131,10 @@ prepareToVis <- function(link, functions.list = NULL){
   }
   fromto <- matrix(0,ncol=2,nrow=dim( link)[1])
   delete <- sort(unique(as.character(link[,1], link[,2])))[which(sort(unique(as.character(link[, 1],link[, 2]))) %in% sort(unique(as.character(Nomfun[, 2])))-1 == -1)]
+  if(length(delete)>0)
+  {
   link <- link[-unique(c(which(link[, 1]==delete), which(link[, 2] == delete))), ]
+  }
   for(i in 1:dim( link)[1])
   {
     fromto[i,1] <- which(as.character( link[i,2])==Nomfun[,2])
@@ -135,11 +180,7 @@ envirDependencies <- function(envir)
 {
   name.functions <- allFunctionEnv(envir)
   
-  toutfonc <- do.call("rbind", lapply( 
-    name.functions, function(x){
-      print(x)
-      linksForOne(envir,x)})
-  )
+  toutfonc <- linksForAll(envir)
   
   visdata <- prepareToVis(unique(toutfonc), name.functions)
   class(visdata) <- "dependenciesGraph"
