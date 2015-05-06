@@ -17,12 +17,12 @@ cleanExtract<-function(x){
 
 CleanList<-function(Tree.fun,extractName)
 {
-  Tree.fun<-list.clean(Tree.fun)
+  Tree.fun<-rlist::list.clean(Tree.fun)
   
   current.warn.option <- options("warn")$warn
   options(warn = -1)
   
-  Tree.fun<-list.rbind(Tree.fun)
+  Tree.fun<-rlist::list.rbind(Tree.fun)
   
   row.nam<-rownames(Tree.fun)
   
@@ -69,10 +69,17 @@ Pck.load<-function(){
 #' @return List to graph
 #'
 #' @export
-Pck.load.to.vis<-function(){
-link<-Pck.load()
-packinstal<-installed.packages()[,1]
-visdata<-prepareToVis(link, unique(packinstal))
-class(visdata) <- "dependenciesGraph"
-return(visdata)
+Pck.load.to.vis<-function(Packages="All"){
+  link<-Pck.load()
+  
+  if(Packages[1]=="All")
+  {
+    packages.view<-installed.packages()[,1]
+  }else{
+    packages.view<-c(Packages,as.character(link[which(link[,1]%in%Packages),2]),as.character(link[which(link[,2]%in%Packages),1]))
+  }
+  
+  visdata<-prepareToVis(link, unique(packages.view))
+  class(visdata) <- "dependenciesGraph"
+  return(visdata)
 }

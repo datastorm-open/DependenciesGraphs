@@ -129,7 +129,7 @@ prepareToVis <- function(link, functions.list = NULL){
     Nomfun <- functions.list
     Nomfun <- data.frame(cbind(id=1:length(Nomfun),label=Nomfun))
   }
-  fromto <- matrix(0,ncol=dim( link)[2],nrow=dim( link)[1])
+ 
   func.link<-sort(unique(c(as.character(link[, 1]),as.character(link[, 2]))))
   func.nom<-sort(unique(as.character(Nomfun[, 2])))
   if(!is.null(Nomfun))
@@ -141,13 +141,14 @@ prepareToVis <- function(link, functions.list = NULL){
       link <- link[-unique(c(which(link[, 1] %in% func.prob), which(link[, 2] %in% func.prob))), ]
     }
   }
-  for(i in 1:dim( link)[1])
+  fromto <- matrix(0,ncol=dim( link)[2],nrow=dim( link)[1])
+  for(i in 1:dim(link)[1])
   {
     fromto[i,1] <- which(as.character( link[i,2])==Nomfun[,2])
     fromto[i,2] <- which(as.character( link[i,1])==Nomfun[,2])
     if(dim( link)[2]>2)
     {
-      fromto[i,3:length(link[i,])] <- link[which(as.character( link[i,2])==Nomfun[,2]),3:length(link[i,])]
+      fromto[i,3:length(link[i,])] <- link[i,3:length(link[i,])]
     }
   }
   
@@ -229,7 +230,7 @@ VisFunsmatrice <- function(Mat)
 #' 
 #' @export 
 #' @method plot dependenciesGraph
-plot.dependenciesGraph <- function(object){
+plot.dependenciesGraph <- function(object,block=FALSE){
   visNetwork(object[[1]], object[[2]]) %>% visEdges(style = "arrow") %>%
-    visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE)
+    visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE, dragNodes = !block)
 }

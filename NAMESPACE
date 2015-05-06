@@ -2,6 +2,7 @@
 
 S3method(plot,dependenciesGraph)
 export(Pck.load)
+export(Pck.load.to.vis)
 export(VisFunsmatrice)
 export(allFunctionEnv)
 export(envirDependencies)
