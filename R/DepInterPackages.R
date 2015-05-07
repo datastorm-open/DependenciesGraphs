@@ -66,6 +66,8 @@ Pck.load<-function(){
 
 #' Given dependencies between all install packages
 #' 
+#' @param Packages : Names of packages to includes to extract
+#' 
 #' @return List to graph
 #'
 #' @export

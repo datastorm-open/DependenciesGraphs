@@ -191,8 +191,12 @@ funDependencies <- function(envir, name.function)
 envirDependencies <- function(envir)
 {
   name.functions <- allFunctionEnv(envir)
-  
+  if(length(name.functions)>1)
+  {
   toutfonc <- linksForAll(envir)
+  }else{
+    toutfonc<-data.frame(1,1)
+  }
   
   visdata <- prepareToVis(unique(toutfonc), name.functions)
   class(visdata) <- "dependenciesGraph"
