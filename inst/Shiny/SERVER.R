@@ -8,6 +8,7 @@ shinyServer(function(input, output,session) {
   observe({
     input$GOb
     isolate({
+      print(input$Pack)
       if(length(input$Pack)>0)
       {
         data<-Pck.load.to.vis(input$Pack)
@@ -38,13 +39,12 @@ shinyServer(function(input, output,session) {
           nb.func.slave[i]=nb.call
         }
         
-        print("test")
-        
+
         ##Output first graph
         output$tabledep <- renderDataTable({data.frame(Function=func,"Import"=nb.func.master,"Imported by"=nb.func.slave)
         },options=optionsDT_fixe)
         output$main_plot <- renderVisNetwork({plot(data,block=TRUE)})
-        
+        curentd1<<-data
       }
     })
   })
@@ -52,23 +52,13 @@ shinyServer(function(input, output,session) {
   
   
   
-  
-  
-  
-  
-  
-  
-
-  
   observe({
     input$zoom
     isolate({
       if(!is.null(input$main_plot_selected) && input$main_plot_selected!="")
       {
-        print(input$main_plot_selected)
-        data<-Pck.load.to.vis(input$Pack)
         
-        func<-as.character(data$Nomfun$label[input$main_plot_selected==data$Nomfun$id])
+        func<-as.character(curentd1$Nomfun$label[input$main_plot_selected==curentd1$Nomfun$id])
         print(func)
         func
         
@@ -81,17 +71,18 @@ shinyServer(function(input, output,session) {
         nb.fun<-length(dep1$Nomfun$label)
         
         output$datatable2<-renderDataTable(data.frame(Nb=nb.fun),options=optionsDT_fixe)
-
+        
         output$zoomin<-renderText(paste("Zoom on package : ",func))
         output$info<-renderText(paste("Information on : ",func))
         
         
         output$main_plot1<-renderVisNetwork({plot(dep1)})
+        curentd2<<-dep1
       }
     })
   })
   
-
+  
   
   
   observe({
@@ -100,13 +91,42 @@ shinyServer(function(input, output,session) {
     func=NULL
     if(length(input$Pack)>0 & length(input$main_plot_selected)>0)
     {
-      data<-Pck.load.to.vis(input$Pack)
-      func<-as.character(data$Nomfun$label[input$main_plot_selected==data$Nomfun$id])
+      
+      func<-as.character(curentd1$Nomfun$label[input$main_plot_selected==curentd1$Nomfun$id])
       output$zoomin2<-renderText(paste(func))
       
     }
     
   })
+  
+  
+  observe({
+    
+    if(!is.null(input$main_plot1_selected) && input$main_plot1_selected!="")
+    {
+      isolate({
+      pck=NULL
+      print(input$Pack)
+      if(length(input$Pack)>0 & length(input$main_plot_selected)>0)
+      {
+      
+        pck<-as.character(curentd1$Nomfun$label[input$main_plot_selected==curentd1$Nomfun$id])
+      }
+      
+      
+      
+      func<-as.character(curentd2$Nomfun$label[input$main_plot1_selected==curentd2$Nomfun$id])
+      try(add.html.help(pck,func),TRUE)
+      
+      output$help<-renderUI(
+        includeHTML(paste0(getwd(),"/temp.html"))
+      )
+      })
+    }
+    
+  })
+  
+  
   
   
 })

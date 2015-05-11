@@ -129,7 +129,7 @@ prepareToVis <- function(link, functions.list = NULL){
     Nomfun <- functions.list
     Nomfun <- data.frame(cbind(id=1:length(Nomfun),label=Nomfun))
   }
- 
+  
   func.link<-sort(unique(c(as.character(link[, 1]),as.character(link[, 2]))))
   func.nom<-sort(unique(as.character(Nomfun[, 2])))
   if(!is.null(Nomfun))
@@ -141,17 +141,24 @@ prepareToVis <- function(link, functions.list = NULL){
       link <- link[-unique(c(which(link[, 1] %in% func.prob), which(link[, 2] %in% func.prob))), ]
     }
   }
-  fromto <- matrix(0,ncol=dim( link)[2],nrow=dim( link)[1])
-  for(i in 1:dim(link)[1])
+  if(!is.null(link))
   {
-    fromto[i,1] <- which(as.character( link[i,2])==Nomfun[,2])
-    fromto[i,2] <- which(as.character( link[i,1])==Nomfun[,2])
-    if(dim( link)[2]>2)
+  fromto <- matrix(0,ncol=dim(link)[2],nrow=dim( link)[1])
+  if(length(fromto)>0)
+  {
+    for(i in 1:dim(link)[1])
     {
-      fromto[i,3:length(link[i,])] <- link[i,3:length(link[i,])]
+      fromto[i,1] <- which(as.character( link[i,2])==Nomfun[,2])
+      fromto[i,2] <- which(as.character( link[i,1])==Nomfun[,2])
+      if(dim( link)[2]>2)
+      {
+        fromto[i,3:length(link[i,])] <- link[i,3:length(link[i,])]
+      }
     }
   }
-  
+  }else{
+    fromto<-cbind(0,0)
+  }
   fromto <- data.frame(fromto)
   names(fromto) <- c("from","to")
   Visdata$Nomfun <- Nomfun
@@ -193,7 +200,7 @@ envirDependencies <- function(envir)
   name.functions <- allFunctionEnv(envir)
   if(length(name.functions)>1)
   {
-  toutfonc <- linksForAll(envir)
+    toutfonc <- linksForAll(envir)
   }else{
     toutfonc<-data.frame(1,1)
   }

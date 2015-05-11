@@ -28,10 +28,16 @@ dashboardPage(
         h3(textOutput({"zoomin"})),
         visNetworkOutput("main_plot1", width = "100%")
       ),
-        box(
-          h3(textOutput({"info"})),
-          dataTableOutput("datatable2")
-         
+      box(
+        h3(textOutput({"info"})),
+        dataTableOutput("datatable2")
+        
+      )
+    ),
+    
+    fluidRow(
+      box(
+       uiOutput("help"),width = 12
       )
     )
   )

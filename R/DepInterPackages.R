@@ -67,7 +67,6 @@ Pck.load<-function(){
 #' Given dependencies between all install packages
 #' 
 #' @param Packages : Names of packages to includes to extract
-#' 
 #' @return List to graph
 #'
 #' @export
@@ -85,3 +84,21 @@ Pck.load.to.vis<-function(Packages="All"){
   class(visdata) <- "dependenciesGraph"
   return(visdata)
 }
+
+
+
+#' Given html help for a function
+#' 
+#' @param package : Names of package to extract help
+#' @param func : Name of function to extract help
+#' @param tempsave : Tempory file to save help
+#'
+#' @export
+add.html.help <- function(package,func,tempsave=paste0(getwd(),"/temp.html"))
+{
+  pkgRdDB = tools:::fetchRdDB(file.path(find.package(package), 'help', package))
+  topics = names(pkgRdDB)
+  rdfunc<-pkgRdDB[[func]]
+  tools::Rd2HTML(pkgRdDB[[func]],out =tempsave)
+}
+
