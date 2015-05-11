@@ -4,7 +4,7 @@
 \alias{plot.dependenciesGraph}
 \title{Plot network for dependenciesGraph object}
 \usage{
-\method{plot}{dependenciesGraph}(object)
+\method{plot}{dependenciesGraph}(object, block = FALSE)
 }
 \arguments{
 \item{object}{: dependenciesGraph object.}

@@ -4,7 +4,7 @@
 \alias{prepareToVis}
 \title{Prepare data for graph visNetwork}
 \usage{
-prepareToVis(link, functions = NULL)
+prepareToVis(link, functions.list = NULL)
 }
 \arguments{
 \item{link}{: Dataframe, two colums, the first is master, the second is slaves}

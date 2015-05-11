@@ -1,178 +1,138 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Network visualization general options</title>
+<html><head><title>R: Polygons from a reference map.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
-<table width="100%" summary="page for visOptions"><tr><td>visOptions</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for geom_map"><tr><td>geom_map</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Network visualization general options</h2>
+<h2>Polygons from a reference map.</h2>
 
 <h3>Description</h3>
 
-<p>Network visualization general options. See <a href="http://visjs.org/docs/network.html#Configuration_options">http://visjs.org/docs/network.html#Configuration_options</a>.
+<p>Does not affect position scales.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-visOptions(graph, highlightNearest = FALSE, nodesIdSelection = FALSE,
-  clickToUse = NULL, useDefaultGroups = NULL, configurePhysics = NULL,
-  dataManipulation = NULL, clustering = NULL,
-  freezeForStabilization = NULL, height = NULL, hover = NULL,
-  keyboard = NULL, dragNetwork = NULL, dragNodes = NULL,
-  hideNodesOnDrag = NULL, hideEdgesOnDrag = NULL, navigation = NULL,
-  smoothCurves = NULL, selectable = NULL, stabilize = NULL,
-  stabilizationIterations = NULL, zoomExtentOnStabilize = NULL,
-  width = NULL, zoomable = NULL)
+geom_map(mapping = NULL, data = NULL, map, stat = "identity", ...)
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>highlightNearest</code></td>
+<tr valign="top"><td><code>mapping</code></td>
 <td>
-<p>: Custom Option. Boolean. Default to false. Highlight nearest when clicking a node ? Based on <a href="http://visjs.org/examples/network/29_neighbourhood_highlight.html">http://visjs.org/examples/network/29_neighbourhood_highlight.html</a>
-This options use click event. Not available for DOT and Gephi.</p>
+<p>The aesthetic mapping, usually constructed with
+<code>aes</code> or <code>aes_string</code>. Only needs to be set
+at the layer level if you are overriding the plot defaults.</p>
 </td></tr>
-<tr valign="top"><td><code>nodesIdSelection</code></td>
+<tr valign="top"><td><code>data</code></td>
 <td>
-<p>:  Custom Option. Boolean. Default to false. A little bit experimental. Add an id node selection. This options use click event. Not available for DOT and Gephi.</p>
+<p>A layer specific dataset - only needed if you want to override
+the plot defaults.</p>
 </td></tr>
-<tr valign="top"><td><code>clickToUse</code></td>
+<tr valign="top"><td><code>map</code></td>
 <td>
-<p>: Boolean. Default to false. When a Network is configured to be clickToUse, it will react to mouse, touch, and keyboard events only when active. When active, a blue shadow border is displayed around the Network. The Network is set active by clicking on it, and is changed to inactive again by clicking outside the Network or by pressing the ESC key.</p>
+<p>Data frame that contains the map coordinates.  This will
+typically be created using <code>fortify</code> on a spatial object.
+It must contain columns <code>x</code> or <code>long</code>, <code>y</code> or
+<code>lat</code>, and <code>region</code> or <code>id</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>useDefaultGroups</code></td>
+<tr valign="top"><td><code>stat</code></td>
 <td>
-<p>: Boolean. Default to true. If true, the default groups are used when groups are used. If you have defined your own groups those will be used. If you have an item with a group that is NOT in your own group list, setting useDefaultGroups true will iterate over the default groups for unknown groups. If it is set to false, it will iterate over your own groups for unknown groups.</p>
+<p>The statistical transformation to use on the data for this
+layer.</p>
 </td></tr>
-<tr valign="top"><td><code>configurePhysics</code></td>
+<tr valign="top"><td><code>...</code></td>
 <td>
-<p>: Boolean. Default to false. Enabling this setting will create a physics configuration div above the network. You can use this to fine tune the physics system to suit your needs. Because of the many possible configurations, there is not a one-size-fits-all setting. By using this tool, you can adapt the physics to your dataset.</p>
-</td></tr>
-<tr valign="top"><td><code>dataManipulation</code></td>
-<td>
-<p>: Just a Boolean, or a named list. Settings for manipulating the Dataset. See <a href="http://visjs.org/docs/network.html#Data_manipulation">http://visjs.org/docs/network.html#Data_manipulation</a>
-</p>
-
-<ul>
-<li><p>&quot;enabled&quot; : Boolean. Default to false. Enabling or disabling of the data manipulation toolbar. If it is initially hidden, an edit button appears in the top left corner.
-</p>
-</li>
-<li><p>&quot;initiallyVisible&quot; : Boolean. Default to false. Initially hide or show the data manipulation toolbar.
-</p>
-</li></ul>
-</td></tr>
-<tr valign="top"><td><code>clustering</code></td>
-<td>
-<p>: Boolean. Default to false. Clustering is turned off by default. Set to true to enabled clustering or see visClustering to set options..</p>
-</td></tr>
-<tr valign="top"><td><code>freezeForStabilization</code></td>
-<td>
-<p>: Boolean. Default to false. With the advent of the storePositions() function, the positions of the nodes can be saved after they are stabilized. The smoothCurves require support nodes and those positions are not stored. In order to speed up the initialization of the network by using storePositions() and loading the nodes with the stored positions, the freezeForStabilization option freezes all nodes that have been supplied with an x and y position in place during the stabilization. That way only the support nodes for the smooth curves have to stabilize, greatly speeding up the stabilization process with cached positions.</p>
-</td></tr>
-<tr valign="top"><td><code>height</code></td>
-<td>
-<p>: String. Default to &quot;400px&quot;. The height of the network in pixels or as a percentage.</p>
-</td></tr>
-<tr valign="top"><td><code>hover</code></td>
-<td>
-<p>: Boolean. Default to false. Enabling the change of the colors of nodes and edges when the mouse hovers over them. Enabling this may have a minor impact on performance.</p>
-</td></tr>
-<tr valign="top"><td><code>keyboard</code></td>
-<td>
-<p>: Just a Boolean, or a named list. Configuration options for shortcuts keys. Shortcut keys are turned off by default. See <a href="http://visjs.org/docs/network.html#Keyboard_navigation">http://visjs.org/docs/network.html#Keyboard_navigation</a>
-</p>
-
-<ul>
-<li><p>&quot;speed : a named list </p>
-
-<ul>
-<li><p>&quot;x&quot; : Number. Default to 10. This defines the speed of the camera movement in the x direction when using the keyboard navigation.
-</p>
-</li>
-<li><p>&quot;y&quot; : Number. Default to 10. This defines the speed of the camera movement in the y direction when using the keyboard navigation.
-</p>
-</li>
-<li><p>&quot;zoom&quot; : Number. Default to 0.02. This defines the zoomspeed when using the keyboard navigation.Number   0.02     This defines the zoomspeed when using the keyboard navigation.
-</p>
-</li></ul>
-
-</li>
-<li><p>&quot;bindToWindow&quot; : Boolean. Default to true. If this is true, global keyboard events will be used. If it is false, the keyboard events are only used when the network is active. It is activated on mouseOver automatically.
-</p>
-</li></ul>
-</td></tr>
-<tr valign="top"><td><code>dragNetwork</code></td>
-<td>
-<p>: Boolean. Default to true. Toggle if the network can be dragged. This will not affect the dragging of nodes.</p>
-</td></tr>
-<tr valign="top"><td><code>dragNodes</code></td>
-<td>
-<p>: Boolean. Default to true. Toggle if the nodes can be dragged. This will not affect the dragging of the network.</p>
-</td></tr>
-<tr valign="top"><td><code>hideNodesOnDrag</code></td>
-<td>
-<p>: Boolean. Default to false. Toggle if the nodes are drawn during a drag. This can greatly improve performance if you have many nodes.</p>
-</td></tr>
-<tr valign="top"><td><code>hideEdgesOnDrag</code></td>
-<td>
-<p>: Boolean. Default to false. Toggle if the edges are drawn during a drag. This can greatly improve performance if you have many edges.</p>
-</td></tr>
-<tr valign="top"><td><code>navigation</code></td>
-<td>
-<p>: Boolean. Default to false. Configuration options for the navigation controls.</p>
-</td></tr>
-<tr valign="top"><td><code>smoothCurves</code></td>
-<td>
-<p>: Just a Boolean, or a named list. If true, edges are drawn as smooth curves. This is more computationally intensive since the edge now is a quadratic Bezier curve. This can be further configured by the options below.
-</p>
-
-<ul>
-<li><p>&quot;dynamic&quot; : Boolean. Default to true. By default, the edges are dynamic. This means there are support nodes placed in the middle of the edge. This support node is also handed by the physics simulation. If false, the smoothness will be based on the relative positions of the to and from nodes. This is computationally cheaper but there is no self organisation.
-</p>
-</li>
-<li><p>&quot;type&quot; : String. Default to &quot;continuous&quot;. This option only affects NONdynamic smooth curves. The supported types are: continuous, discrete, diagonalCross, straightCross, horizontal, vertical, curvedCW, curvedCCW. The effects of these types are shown in examples 26 and 27
-</p>
-</li>
-<li><p>&quot;roundness&quot; : Number. Default to 0.5. This only affects NONdynamic smooth curves. The roundness can be tweaked with the parameter. The value range is from 0 to 1 with a maximum roundness at 0.5.
-</p>
-</li></ul>
-</td></tr>
-<tr valign="top"><td><code>selectable</code></td>
-<td>
-<p>: Boolean. Default to true. If true, nodes in the network can be selected by clicking them. Long press can be used to select multiple nodes.</p>
-</td></tr>
-<tr valign="top"><td><code>stabilize</code></td>
-<td>
-<p>: Boolean. Default to true. If true, the network is stabilized before displaying it. If false, the nodes move to a stabe position visibly in an animated way.</p>
-</td></tr>
-<tr valign="top"><td><code>stabilizationIterations</code></td>
-<td>
-<p>: Number. Default to 1000. If stabilize is set to true, this number is the (maximum) amount of physics steps the stabilization process takes before showing the result. If your simulation takes too long to stabilize, this number can be reduced. On the other hand, if your network is not stabilized after loading, this number can be increased.</p>
-</td></tr>
-<tr valign="top"><td><code>zoomExtentOnStabilize</code></td>
-<td>
-<p>: Boolean. Default to true. When the internal stabilize function is called because the stabilize option is set to true OR the hierarchical system (re)initializes, a call to zoomExtent is done by default. By setting this to false, you can avoid this call.</p>
-</td></tr>
-<tr valign="top"><td><code>width</code></td>
-<td>
-<p>: String. Default to &quot;400px&quot;. The width of the network in pixels or as a percentage.</p>
-</td></tr>
-<tr valign="top"><td><code>zoomable</code></td>
-<td>
-<p>: Boolean. Default to true. Toggle if the network can be zoomed.</p>
+<p>other arguments passed on to <code>layer</code>. This can
+include aesthetics whose values you want to set, not map. See
+<code>layer</code> for more details.</p>
 </td></tr>
 </table>
 
 
-<h3>See Also</h3>
+<h3>Aesthetics</h3>
 
-<p>visNodes for nodes options, visEdges for edges options, visGroups for groups options
+<p><code>geom_map</code> understands the following aesthetics (required aesthetics are in bold):
 </p>
+
+<ul>
+<li> <p><code><STRONG>map_id</STRONG></code>
+</p>
+</li>
+<li> <p><code>alpha</code>
+</p>
+</li>
+<li> <p><code>colour</code>
+</p>
+</li>
+<li> <p><code>fill</code>
+</p>
+</li>
+<li> <p><code>linetype</code>
+</p>
+</li>
+<li> <p><code>size</code>
+</p>
+</li></ul>
+
+
+
+
+<h3>Examples</h3>
+
+<pre>
+# When using geom_polygon, you will typically need two data frames:
+# one contains the coordinates of each polygon (positions),  and the
+# other the values associated with each polygon (values).  An id
+# variable links the two together
+
+ids &lt;- factor(c("1.1", "2.1", "1.2", "2.2", "1.3", "2.3"))
+
+values &lt;- data.frame(
+  id = ids,
+  value = c(3, 3.1, 3.1, 3.2, 3.15, 3.5)
+)
+
+positions &lt;- data.frame(
+  id = rep(ids, each = 4),
+  x = c(2, 1, 1.1, 2.2, 1, 0, 0.3, 1.1, 2.2, 1.1, 1.2, 2.5, 1.1, 0.3,
+  0.5, 1.2, 2.5, 1.2, 1.3, 2.7, 1.2, 0.5, 0.6, 1.3),
+  y = c(-0.5, 0, 1, 0.5, 0, 0.5, 1.5, 1, 0.5, 1, 2.1, 1.7, 1, 1.5,
+  2.2, 2.1, 1.7, 2.1, 3.2, 2.8, 2.1, 2.2, 3.3, 3.2)
+)
+
+ggplot(values) + geom_map(aes(map_id = id), map = positions) +
+  expand_limits(positions)
+ggplot(values, aes(fill = value)) +
+  geom_map(aes(map_id = id), map = positions) +
+  expand_limits(positions)
+ggplot(values, aes(fill = value)) +
+  geom_map(aes(map_id = id), map = positions) +
+  expand_limits(positions) + ylim(0, 3)
+
+# Better example
+crimes &lt;- data.frame(state = tolower(rownames(USArrests)), USArrests)
+library(reshape2) # for melt
+crimesm &lt;- melt(crimes, id = 1)
+if (require(maps)) {
+  states_map &lt;- map_data("state")
+  ggplot(crimes, aes(map_id = state)) +
+    geom_map(aes(fill = Murder), map = states_map) +
+    expand_limits(x = states_map$long, y = states_map$lat)
+
+  last_plot() + coord_map()
+  ggplot(crimesm, aes(map_id = state)) +
+    geom_map(aes(fill = value), map = states_map) +
+    expand_limits(x = states_map$long, y = states_map$lat) +
+    facet_wrap( ~ variable)
+}
+</pre>
 
 
 </body></html>
