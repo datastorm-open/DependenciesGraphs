@@ -1,4 +1,4 @@
-optionsDT_fixe <- list(paging=F, searching=F, Info=F, search.caseInsensitive=T)
+optionsDT_fixe <- list(paging=FALSE, searching=FALSE, Info=FALSE, search.caseInsensitive=TRUE)
 
 
 shinyServer(function(input, output,session) {
@@ -39,10 +39,14 @@ shinyServer(function(input, output,session) {
           nb.func.slave[i]=nb.call
         }
         
-
+    
+        optionsDT_fixe$drawCallback<-I("function( settings ) {document.getElementById('tabledep').style.width = '400px';}")
         ##Output first graph
         output$tabledep <- renderDataTable({data.frame(Function=func,"Import"=nb.func.master,"Imported by"=nb.func.slave)
-        },options=optionsDT_fixe)
+        },
+        
+        
+        options=optionsDT_fixe)
         output$main_plot <- renderVisNetwork({plot(data,block=TRUE)})
         curentd1<<-data
       }
@@ -55,6 +59,7 @@ shinyServer(function(input, output,session) {
   observe({
     input$zoom
     isolate({
+ 
       if(!is.null(input$main_plot_selected) && input$main_plot_selected!="")
       {
         
@@ -70,16 +75,20 @@ shinyServer(function(input, output,session) {
         dep1 <- envirDependencies(paste0("package:",func))
         nb.fun<-length(dep1$Nomfun$label)
         
-        output$datatable2<-renderDataTable(data.frame(Nb=nb.fun),options=optionsDT_fixe)
+        
+        updateTabsetPanel(session,"Tabsetpan", selected = "Functions")
+        optionsDT_fixe$drawCallback<-I("function( settings ) {document.getElementById('datatable2').style.width = '100px';}")
+        output$datatable2<-renderDataTable(data.frame(Number.of.functions=nb.fun),options=optionsDT_fixe)
         
         output$zoomin<-renderText(paste("Zoom on package : ",func))
         output$info<-renderText(paste("Information on : ",func))
+        curentd3<<-func
         
-        
-        output$main_plot1<-renderVisNetwork({plot(dep1)})
+        output$main_plot1<-renderVisNetwork({plot(dep1,block=TRUE)})
         curentd2<<-dep1
       }
     })
+    
   })
   
   
@@ -105,17 +114,12 @@ shinyServer(function(input, output,session) {
     if(!is.null(input$main_plot1_selected) && input$main_plot1_selected!="")
     {
       isolate({
-      pck=NULL
-      print(input$Pack)
-      if(length(input$Pack)>0 & length(input$main_plot_selected)>0)
-      {
-      
-        pck<-as.character(curentd1$Nomfun$label[input$main_plot_selected==curentd1$Nomfun$id])
-      }
-      
-      
-      
+      pck<-curentd3
+
+      print(pck)
+
       func<-as.character(curentd2$Nomfun$label[input$main_plot1_selected==curentd2$Nomfun$id])
+      print(func)
       try(add.html.help(pck,func),TRUE)
       
       output$help<-renderUI(
@@ -128,4 +132,9 @@ shinyServer(function(input, output,session) {
 
 })
 
+
+
+
+
+  
 
