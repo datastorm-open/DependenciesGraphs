@@ -1,4 +1,4 @@
-optionsDT_fixe <- list(paging=FALSE, searching=FALSE, Info=FALSE, search.caseInsensitive=TRUE)
+optionsDT_fixe <- list(paging=FALSE, searching=FALSE, bInfo=FALSE, search.caseInsensitive=TRUE)
 
 
 shinyServer(function(input, output,session) {

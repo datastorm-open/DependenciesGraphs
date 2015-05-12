@@ -1,11 +1,11 @@
 dashboardPage(
   dashboardHeader(title = "DataK depends Graphs"),
-  dashboardSidebar(
+  dashboardSidebar( disable = TRUE
                    
   ),
   dashboardBody(
     # Boxes need to be put in a row (or column)
-    
+    tags$head(tags$link(rel='stylesheet', type='text/css', href='style.css')),
     tabsetPanel(id = "Tabsetpan",  title = "Packages exploration", width = "100%",
              # The id lets us use input$tabset1 on the server to find the current tab 
              tabPanel("Packages",
