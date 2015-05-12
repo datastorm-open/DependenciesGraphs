@@ -21,4 +21,4 @@ plot(dep)
 launch.app()
 
 ####More exemple 
-http://dataknowledge.github.io/Dependencies/
+http://dataknowledge.github.io/DependenciesGraphs/
