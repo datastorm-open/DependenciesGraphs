@@ -181,7 +181,7 @@ prepareToVis <- function(link, functions.list = NULL){
 funDependencies <- function(envir, name.function)
 {
   visdata <- prepareToVis(linksForOne(envir, name.function))
-  class(visdata) <- "dependenciesGraph"
+  class(visdata) <- "dependenciesGraphs"
   return(visdata)
 }
 
@@ -206,7 +206,7 @@ envirDependencies <- function(envir)
   }
   
   visdata <- prepareToVis(unique(toutfonc), name.functions)
-  class(visdata) <- "dependenciesGraph"
+  class(visdata) <- "dependenciesGraphs"
   return(visdata)
 }
 
@@ -222,17 +222,17 @@ VisFunsmatrice <- function(Mat)
   data.mat <- mastersSlaves(Mat)
   
   visdata <- prepareToVis(unique(data.mat), colnames(Mat))
-  class(visdata) <- "dependenciesGraph"
+  class(visdata) <- "dependenciesGraphs"
   return(visdata)
 }
 
-#' Plot network for dependenciesGraph object
+#' Plot network for dependenciesGraphs object
 #' 
-#' Plot network for dependenciesGraph object. Using visNetwork package.
+#' Plot network for dependenciesGraphs object. Using visNetwork package.
 #' 
-#' Plot network for dependenciesGraph object. Using visNetwork package.
+#' Plot network for dependenciesGraphs object. Using visNetwork package.
 #' 
-#' @param object : dependenciesGraph object. 
+#' @param object : dependenciesGraphs object. 
 #' 
 #' @examples
 #' 
@@ -240,8 +240,11 @@ VisFunsmatrice <- function(Mat)
 #' plot(dep)
 #' 
 #' @export 
-#' @method plot dependenciesGraph
-plot.dependenciesGraph <- function(object,block=FALSE){
+#' @method plot dependenciesGraphs
+plot.dependenciesGraphs <- function(object,block=FALSE){
   visNetwork(object[[1]], object[[2]]) %>% visEdges(style = "arrow") %>%
     visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE, dragNodes = !block)
 }
+
+
+
