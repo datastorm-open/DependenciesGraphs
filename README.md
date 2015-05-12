@@ -15,3 +15,10 @@ plot(dep)
 dep <- funDependencies("package:ibr","iterchoiceS1")
 ##### visualization
 plot(dep)
+
+
+####Shiny app
+launch.app()
+
+####More exemple 
+http://dataknowledge.github.io/Dependencies/
