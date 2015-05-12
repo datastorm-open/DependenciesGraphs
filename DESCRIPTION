@@ -1,4 +1,4 @@
-Package: DependenciesGraph
+Package: DependenciesGraphs
 Type: Package
 Title: Dependencies visualization between functions and environments 
 Version: 0.1
