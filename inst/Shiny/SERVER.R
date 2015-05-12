@@ -12,8 +12,7 @@ shinyServer(function(input, output,session) {
       if(length(input$Pack)>0)
       {
         data<-Pck.load.to.vis(input$Pack)
-        names(data$fromto)[3]<-"title"
-        data$fromto$title<-paste0("<p>",data$fromto$title,"</p>")
+        
         func<-c(input$Pack)
         print(func)
         nb.func.master=NULL
@@ -47,6 +46,7 @@ shinyServer(function(input, output,session) {
         
         
         options=optionsDT_fixe)
+        print(data)
         output$main_plot <- renderVisNetwork({plot(data,block=TRUE)})
         curentd1<<-data
       }

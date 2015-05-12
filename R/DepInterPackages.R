@@ -81,7 +81,11 @@ Pck.load.to.vis<-function(Packages="All"){
   }
   
   visdata<-prepareToVis(link, unique(packages.view))
-  class(visdata) <- "dependenciesGraph"
+  
+  names(visdata$fromto)[3]<-"title"
+  visdata$fromto$title<-paste0("<p>",visdata$fromto$title,"</p>")
+  
+  class(visdata) <- "dependenciesGraphs"
   return(visdata)
 }
 

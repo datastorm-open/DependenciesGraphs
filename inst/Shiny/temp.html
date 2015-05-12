@@ -1,74 +1,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Create a 'List environment' that wraps given 'data' and most...</title>
+<html><head><title>R: Change the selected tab on the client</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
-<table width="100%" summary="page for List"><tr><td>List</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for updateTabItems"><tr><td>updateTabItems</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Create a <code>List environment</code> that wraps given <code>data</code> and
-most list functions are defined for chainable operations.</h2>
+<h2>Change the selected tab on the client</h2>
 
 <h3>Description</h3>
 
-<p>Create a <code>List environment</code> that wraps given <code>data</code> and
-most list functions are defined for chainable operations.
+<p>This function controls the active tab of <code>tabItems</code> from the
+server. It behaves just like <code>updateTabsetPanel</code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-List(data = list())
+updateTabItems(session, inputId, selected = NULL)
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>data</code></td>
+<tr valign="top"><td><code>session</code></td>
 <td>
-<p>A <code>list</code> or <code>vector</code></p>
+<p>The <code>session</code> object passed to function given to
+<code>shinyServer</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>inputId</code></td>
+<td>
+<p>The id of the <code>tabsetPanel</code>, <code>navlistPanel</code>,
+or <code>navbarPage</code> object.</p>
+</td></tr>
+<tr valign="top"><td><code>selected</code></td>
+<td>
+<p>The name of the tab to make active.</p>
 </td></tr>
 </table>
-
-
-<h3>Details</h3>
-
-<p>Most list functions are defined in <code>List environment</code>.
-In addition to these functions, <code>call(fun,...)</code> calls
-external function <code>fun</code> with additional parameters specifies in
-<code>...</code>.
-</p>
-<p>To extract the data from List <code>x</code>, call <code>x$data</code> or simply
-<code>x[]</code>.
-</p>
 
 
 <h3>Examples</h3>
 
 <pre>
-x &lt;- list(p1 = list(type="A",score=list(c1=10,c2=8)),
-       p2 = list(type="B",score=list(c1=9,c2=9)),
-       p3 = list(type="B",score=list(c1=9,c2=7)))
-m &lt;- List(x)
-m$filter(type=="B")$
-  map(score$c1) []
+## Only run this example in interactive R sessions
+if (interactive()) {
 
-m$group(type)$
-  map(g ~ List(g)$
-      map(score)$
-      call(unlist)$
-      call(mean) []) []
+ui &lt;- dashboardPage(
+  dashboardHeader(title = "Simple tabs"),
+  dashboardSidebar(
+    sidebarMenu(
+      id = "tabs",
+      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+      menuItem("Widgets", tabName = "widgets", icon = icon("th"))
+    ),
+    actionButton('switchtab', 'Switch tab')
+  ),
+  dashboardBody(
+    tabItems(
+      tabItem(tabName = "dashboard",
+        h2("Dashboard tab content")
+      ),
+      tabItem(tabName = "widgets",
+        h2("Widgets tab content")
+      )
+    )
+  )
+)
 
-# Subsetting, extracting, and assigning
+server &lt;- function(input, output, session) {
+  observeEvent(input$switchtab, {
+    newtab &lt;- switch(input$tabs,
+      "dashboard" = "widgets",
+      "widgets" = "dashboard"
+    )
+    updateTabItems(session, "tabs", newtab)
+  })
+}
 
-p &lt;- List(list(a=1,b=2))
-p["a"]
-p[["a"]]
-p$a &lt;- 2
-p["b"] &lt;- NULL
-p[["a"]] &lt;- 3
+shinyApp(ui, server)
+}
 </pre>
 
 

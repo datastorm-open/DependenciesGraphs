@@ -246,5 +246,24 @@ plot.dependenciesGraphs <- function(object,block=FALSE){
     visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE, dragNodes = !block)
 }
 
+#' Launch shiny app
+#' 
+#' @param path.install.package : Where you have install package DependenciesGraphs. If null, search in current library
+#'  
+#' @export   
+launch.app <- function(path.install.package=NULL){
+  if(is.null(path.install.package))
+  {
+  path.install.package<-.libPaths()
 
-
+  
+  i<-1
+  while(!"DependenciesGraphs"%in%list.files(path.install.package[i]))
+  {
+    i <- i + 1
+  }
+  }
+  app.path<-paste0(path.install.package[i],"/DependenciesGraphs/Shiny")
+  shiny::runApp(app.path,launch.browser = TRUE)
+  
+}
