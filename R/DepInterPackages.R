@@ -67,10 +67,11 @@ Pck.load<-function(){
 #' Given dependencies between all install packages
 #' 
 #' @param Packages : Names of packages to includes to extract
+#' @param color.table : Name of color to use
 #' @return List to graph
 #'
 #' @export
-Pck.load.to.vis<-function(Packages="All"){
+Pck.load.to.vis<-function(Packages="All",color.table=c("#0B0B3B","#0404B4","#5858FA","#A9A9F5")){
   link<-Pck.load()
   
   if(Packages[1]=="All")
@@ -84,6 +85,12 @@ Pck.load.to.vis<-function(Packages="All"){
   
   names(visdata$fromto)[3]<-"title"
   visdata$fromto$title<-paste0("<p>",visdata$fromto$title,"</p>")
+  visdata$fromto$color<-as.numeric(as.factor(visdata$fromto$title))
+  
+  for(i in 1:length(unique(visdata$fromto$color)))
+  {
+    visdata$fromto$color[which(as.character(visdata$fromto$color)==as.character(i))]<-color.table[i]
+  }
   
   class(visdata) <- "dependenciesGraphs"
   return(visdata)

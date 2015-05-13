@@ -4,10 +4,13 @@
 \alias{Pck.load.to.vis}
 \title{Given dependencies between all install packages}
 \usage{
-Pck.load.to.vis(Packages = "All")
+Pck.load.to.vis(Packages = "All", color.table = c("red", "blue", "green",
+  "yellow", "pink"))
 }
 \arguments{
 \item{Packages}{: Names of packages to includes to extract}
+
+\item{color.table}{: Name of color to use}
 }
 \value{
 List to graph
