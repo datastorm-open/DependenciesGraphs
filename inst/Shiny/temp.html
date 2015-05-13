@@ -1,87 +1,169 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Change the selected tab on the client</title>
+<html><head><title>R: Write Files in Stata Binary Format</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
-<table width="100%" summary="page for updateTabItems"><tr><td>updateTabItems</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for write.dta"><tr><td>write.dta</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Change the selected tab on the client</h2>
+<h2>Write Files in Stata Binary Format</h2>
 
 <h3>Description</h3>
 
-<p>This function controls the active tab of <code>tabItems</code> from the
-server. It behaves just like <code>updateTabsetPanel</code>.
+<p>Writes the data frame to file in the Stata binary
+format.  Does not write array variables unless they can be
+<code>drop</code>-ed to a vector.
+</p>
+<p>Frozen: will not support Stata formats after 10 (aka 11).
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-updateTabItems(session, inputId, selected = NULL)
+write.dta(dataframe, file, version = 7L,
+          convert.dates = TRUE, tz = "GMT",
+          convert.factors = c("labels", "string", "numeric", "codes"))
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>session</code></td>
+<tr valign="top"><td><code>dataframe</code></td>
 <td>
-<p>The <code>session</code> object passed to function given to
-<code>shinyServer</code>.</p>
+<p>a data frame.</p>
 </td></tr>
-<tr valign="top"><td><code>inputId</code></td>
+<tr valign="top"><td><code>file</code></td>
 <td>
-<p>The id of the <code>tabsetPanel</code>, <code>navlistPanel</code>,
-or <code>navbarPage</code> object.</p>
+<p>character string giving filename.</p>
 </td></tr>
-<tr valign="top"><td><code>selected</code></td>
+<tr valign="top"><td><code>version</code></td>
 <td>
-<p>The name of the tab to make active.</p>
+<p>integer: Stata version: 6, 7, 8 and 10 are supported,
+and 9 is mapped to 8, 11 to 10.</p>
+</td></tr>
+<tr valign="top"><td><code>convert.dates</code></td>
+<td>
+<p>Convert <code>Date</code> and <code>POSIXt</code> objects
+to Stata dates?</p>
+</td></tr>
+<tr valign="top"><td><code>tz</code></td>
+<td>
+<p>timezone for date conversion</p>
+</td></tr>
+<tr valign="top"><td><code>convert.factors</code></td>
+<td>
+<p>how to handle factors</p>
 </td></tr>
 </table>
+
+
+<h3>Details</h3>
+
+<p>The major differences between file formats in Stata versions is that
+version 7.0 and later allow 32-character variable names (5 and 6 were
+restricted to 8-character name).  The <code>abbreviate</code> function is
+used to trim long variables to the permitted length.  A warning is
+given if this is needed and it is an error for the abbreviated names
+not to be unique.
+</p>
+<p>The columns in the data frame become variables in the Stata data set.
+Missing values are handled correctly.
+</p>
+<p>Unless deselected by argument <code>convert.dates</code>, <font face="Courier New,Courier" color="#666666"><b>R</b></font> date and
+date-time objects (<code>POSIXt</code> classes) are converted into the Stata
+format.  For date-time objects this may lose information &ndash; Stata
+dates are in days since 1960-1-1.  <code>POSIXct</code> objects can be
+written without conversion but will not be understood as dates by
+Stata; <code>POSIXlt</code> objects cannot be written without conversion.
+</p>
+<p>There are four options for handling factors.  The default is to use
+Stata &lsquo;value labels&rsquo; for the factor levels.  With
+<code>convert.factors="string"</code>, the factor levels are written as
+strings (the name of the value label is taken from the 
+<code>"val.labels"</code> attribute if it exists or the variable name 
+otherwise).  With <code>convert.factors="numeric"</code> the numeric values
+of the levels are written, or <code>NA</code> if they cannot be coerced to
+numeric.  Finally, <code>convert.factors="codes"</code> writes the
+underlying integer codes of the factors.  This last used to be the
+only available method and is provided largely for backwards
+compatibility.
+</p>
+<p>If the <code>"label.table"</code> contains value labels with names not already 
+attached to a variable (not the variable name or name from 
+<code>"val.labels"</code>) then these will be written out as well.
+</p>
+<p>If the <code>"datalabel"</code> attribute contains a string, it is written out
+as the dataset label otherwise the dataset label is &quot;Written by R.&quot;.
+</p>
+<p>If the <code>"expansion.table"</code> attribute exists expansion fields are
+written. This attribute should contain a list where each element is 
+string vector of length three. The first vector element contains the 
+name of a variable or &quot;_dta&quot; (meaning the dataset). The second element
+contains the characeristic name. The third contains the associated data.
+</p>
+<p>If the <code>"val.labels"</code> attribute contains a string vector with a
+string label for each variable then this is written as the variable
+labels. Otherwise the variable names are repeated as variable labels.
+</p>
+<p>If the <code>"var.labels"</code> attribute contains a string vector with a
+string label for each variable then this is written as the variable
+labels. Otherwise the variable names are repeated as variable labels.
+</p>
+<p>For Stata 8 or later use the default <code>version=7</code> &ndash; the only
+advantage of Stata 8 format is that it can represent multiple
+different missing value types, and <font face="Courier New,Courier" color="#666666"><b>R</b></font> doesn't have them.  Stata 10/11
+allows longer format lists, but <font face="Courier New,Courier" color="#666666"><b>R</b></font> does not make use of them.
+</p>
+<p>Note that the Stata formats are documented to use ASCII strings &ndash;
+<font face="Courier New,Courier" color="#666666"><b>R</b></font> does not enforce this, but use of non-ASCII character strings will
+not be portable as the encoding is not recorded.  Up to 244 bytes are
+allowed in character data, and longer strings will be truncated with a
+warning.
+</p>
+<p>Stata uses some large numerical values to represent missing
+values.  This function does not currently check, and hence integers
+greater than <code>2147483620</code> and doubles greater than
+<code>8.988e+307</code> may be misinterpreted by Stata.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Lumley and R-core members: support for value labels by
+Brian Quistorff.
+</p>
+
+
+<h3>References</h3>
+
+<p>Stata 6.0 Users Manual, Stata 7.0 Programming manual, Stata online
+help (version 8 and later, also <a href="http://www.stata.com/help.cgi?dta_114">http://www.stata.com/help.cgi?dta_114</a>
+and <a href="http://www.stata.com/help.cgi?dta_113">http://www.stata.com/help.cgi?dta_113</a>) describe the file formats.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>read.dta</code>,
+<code>attributes</code>,
+<code>DateTimeClasses</code>,
+<code>abbreviate</code>
+</p>
 
 
 <h3>Examples</h3>
 
 <pre>
-## Only run this example in interactive R sessions
-if (interactive()) {
-
-ui &lt;- dashboardPage(
-  dashboardHeader(title = "Simple tabs"),
-  dashboardSidebar(
-    sidebarMenu(
-      id = "tabs",
-      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-      menuItem("Widgets", tabName = "widgets", icon = icon("th"))
-    ),
-    actionButton('switchtab', 'Switch tab')
-  ),
-  dashboardBody(
-    tabItems(
-      tabItem(tabName = "dashboard",
-        h2("Dashboard tab content")
-      ),
-      tabItem(tabName = "widgets",
-        h2("Widgets tab content")
-      )
-    )
-  )
-)
-
-server &lt;- function(input, output, session) {
-  observeEvent(input$switchtab, {
-    newtab &lt;- switch(input$tabs,
-      "dashboard" = "widgets",
-      "widgets" = "dashboard"
-    )
-    updateTabItems(session, "tabs", newtab)
-  })
-}
-
-shinyApp(ui, server)
-}
+write.dta(swiss, swissfile &lt;- tempfile())
+read.dta(swissfile)
 </pre>
 
 

@@ -15,16 +15,7 @@ shinyServer(function(input, output,session) {
         
         func<-c(input$Pack)
         print(func)
-        nb.func.master=NULL
-        for(i in 1:length(func))
-        {
-          id.call.master<-as.numeric(as.character(data$Nomfun$id[which(func[i]==data$Nomfun$label)]))
-          
-          id.call.slave<-as.numeric(as.character(data$fromto$to[which(id.call.master==data$fromto$from)]))
-          
-          nb.call<-length(as.character(data$Nomfun$label[id.call.slave]))
-          nb.func.master[i]=nb.call
-        }
+
         
         nb.func.slave=NULL
         for(i in 1:length(func))
@@ -41,10 +32,11 @@ shinyServer(function(input, output,session) {
     
         optionsDT_fixe$drawCallback<-I("function( settings ) {document.getElementById('tabledep').style.width = '400px';}")
         ##Output first graph
-        output$tabledep <- renderDataTable({data.frame(Function=func,"Import"=nb.func.master,"Imported by"=nb.func.slave)
-        },
+        df<-data.frame(Function=func,"Import"=nb.func.master,"Imported by"=nb.func.slave)
+
+     
         
-        
+        output$tabledep <- renderDataTable({df},
         options=optionsDT_fixe)
         print(data)
         output$main_plot <- renderVisNetwork({plot(data,block=TRUE)})

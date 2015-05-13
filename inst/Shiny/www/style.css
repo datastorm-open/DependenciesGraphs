@@ -1,5 +1,53 @@
-button.btn.btn-default.action-button{
-  font-size: larger; 
-  color: black; 
-  background-color:#0489B1
+button.btn.btn-default.action-button {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+button.btn.btn-default.action-button:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+
+
+
+
+
+.shiny-datatable-output table
+{
+    border: 3px solid green;
+     text-align: center;
+}
+
+.shiny-datatable-output td{
+      border: 1px solid green;
+        background-color: #FCFCFC;
+}
+
+.shiny-datatable-output thead{
+      text-align: center;
+      border-bottom: 3px solid green;
+}
+
+.shiny-datatable-output th{
+
+        text-align: center;
+        border: 1px solid green;
 }
