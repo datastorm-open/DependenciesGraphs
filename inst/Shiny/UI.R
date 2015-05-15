@@ -54,7 +54,7 @@ dashboardPage(
                              h3(textOutput({"zoomin"})),
                              visNetworkOutput("main_plot1", width = "100%",height = "600px")
                              ,width = 8),
-                           box(
+                           column(
                              div(
                                h3(textOutput({"info"})),
                                dataTableOutput("datatable2")

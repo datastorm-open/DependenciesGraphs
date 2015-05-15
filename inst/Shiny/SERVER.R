@@ -122,35 +122,43 @@ shinyServer(function(input, output,session) {
         print(func)
         try(add.html.help(pck,func),TRUE)
         
-        output$help<-renderUI(
-          includeHTML(paste0(getwd(),"/temp.html"))
-        )
+        if(length(htmlTreeParse(paste0(getwd(),"/temp.html"))$children$html)>0)
+        {
+          output$help<-renderUI(
+            includeHTML(paste0(getwd(),"/temp.html")))
+          
+        }else{
+          output$help<-renderUI("Not available help for this function")
+        }
       })
-    }
-    
-  })
-  
-  observe({
-    
-    if(!is.null(input$main_plot_selected) && input$main_plot_selected!="")
-    {
-      output$Groupebutton<-renderUI({
-        fluidRow(
-          h3("Zoom"),
-          actionButton("zoom", "Launch zoom on :",icon = icon("line-chart")),
-          h3(textOutput({"zoomin2"})),align="center"
+    }else{
 
-        )
-      })
-    }
-    else
-    {
-      output$Groupebutton<-renderUI({NULL})
-    }
-    
-  })
+        output$help<-renderUI("Select a function")
+      }
+      
+    })
+
+observe({
+  
+  if(!is.null(input$main_plot_selected) && input$main_plot_selected!="")
+  {
+    output$Groupebutton<-renderUI({
+      fluidRow(
+        h3("Zoom"),
+        actionButton("zoom", "Launch zoom on :",icon = icon("line-chart")),
+        h3(textOutput({"zoomin2"})),align="center"
+        
+      )
+    })
+  }
+  else
+  {
+    output$Groupebutton<-renderUI({NULL})
+  }
   
 })
+
+  })
 
 
 
