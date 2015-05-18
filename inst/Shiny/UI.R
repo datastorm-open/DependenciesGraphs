@@ -34,14 +34,14 @@ dashboardPage(
                                  uiOutput("Groupebutton")
                                ),
                                
-                              
-                                 div(
-                                   
-                                   h3( textOutput("titledatatabel")),
-                                   dataTableOutput("tabledep")
-                                   ,align="center"
-                                 )
-                                 , 
+                               
+                               div(
+                                 
+                                 h3( textOutput("titledatatabel")),
+                                 dataTableOutput("tabledep")
+                                 ,align="center"
+                               )
+                               , 
                                width=4)
                            )
                          )
@@ -68,6 +68,17 @@ dashboardPage(
                              uiOutput("help"),width = 12
                            )
                          )
+                ),
+                tabPanel("Script",
+     
+               
+                fluidRow(
+                  box(
+                    fileInput('file1', 'Choose R File',
+                              accept=NULL),
+                    visNetworkOutput("plotscript", width = "100%",height = "700px")
+                    ,width = 12)
+                )
                 )
     )
   )

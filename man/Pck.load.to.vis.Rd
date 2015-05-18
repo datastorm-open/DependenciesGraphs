@@ -4,8 +4,8 @@
 \alias{Pck.load.to.vis}
 \title{Given dependencies between all install packages}
 \usage{
-Pck.load.to.vis(Packages = "All", color.table = c("red", "blue", "green",
-  "yellow", "pink"))
+Pck.load.to.vis(Packages = "All", color.table = c("#0B0B3B", "#0404B4",
+  "#5858FA", "#A9A9F5"))
 }
 \arguments{
 \item{Packages}{: Names of packages to includes to extract}

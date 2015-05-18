@@ -4,7 +4,7 @@
 \alias{allFunctionEnv}
 \title{Given a environment, can be a package, returns a vector of included functions in this environment}
 \usage{
-allFunctionEnv(envir)
+allFunctionEnv(name, envir)
 }
 \arguments{
 \item{envir}{: Environment, try "search()" to obtain a list of loaded environments}

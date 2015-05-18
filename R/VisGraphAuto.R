@@ -3,8 +3,8 @@
 #' @return Names of included functions in this environment.
 #'
 #' @export
-allFunctionEnv <- function(envir){
-  functions.name <- as.vector(ls.str(envir, mode = "function"))
+allFunctionEnv <- function(name,envir){
+  functions.name <- as.vector(ls.str(name,envir, mode = "function"))
   return(functions.name)
 }
 
