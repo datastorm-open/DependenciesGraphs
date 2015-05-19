@@ -105,6 +105,8 @@ Pck.load.to.vis<-function(Packages="All",color.table=c("#0B0B3B","#0404B4","#585
 #' @param tempsave : Tempory file to save help
 #'
 #' @export
+#' 
+#' @import XML
 add.html.help <- function(package,func,tempsave=paste0(getwd(),"/temp.html"))
 {
   pkgRdDB = tools:::fetchRdDB(file.path(find.package(package), 'help', package))
