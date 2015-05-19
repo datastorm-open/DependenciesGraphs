@@ -24,13 +24,15 @@ package.load<-function(path)
 
 script.like.fun <- function(path,path.temp)
 {
-  script<-read.table(path,sep="\n")$V1
+  script<-read.table(path,sep="\n",quote = "")$V1
   scriptfun<-rep("",length(script)+2)
   scriptfun[1]<-"glob <- function(){"
   scriptfun[2:(length(script)+1)]=as.character(script)
   scriptfun[length(script)+2]="}"
   write.table(as.factor(scriptfun),path.temp,row.names=FALSE,col.names=FALSE,quote=FALSE)
 }
+
+
 
 
 
@@ -72,7 +74,7 @@ data.graph.script<-function(path)
   }
   
   dep <- funDependencies(e,fcte)
-  
+  dep$fromto<-unique(dep$fromto)
   
   
   dep$Nomfun$group<-"YourScript"
