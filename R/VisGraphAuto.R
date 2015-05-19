@@ -204,8 +204,16 @@ envirDependencies <- function(envir)
   }else{
     toutfonc<-data.frame(1,1)
   }
+  nofunc=FALSE
+  if(length(name.functions)==0){
+    nofunc=TRUE
+    name.functions=NULL}
   
   visdata <- prepareToVis(unique(toutfonc), name.functions)
+  if(nofunc)
+  {
+    visdata$Nomfun$label="No function found"
+  }
   class(visdata) <- "dependenciesGraphs"
   return(visdata)
 }
