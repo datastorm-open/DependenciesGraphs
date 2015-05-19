@@ -90,25 +90,7 @@ shinyServer(function(input, output,session) {
     })
     
   })
-  
-  
-  
-  
-  observe({
-    input$zoom
     
-    func=NULL
-    if(length(input$Pack)>0 & length(input$main_plot_selected)>0)
-    {
-      
-      func<-as.character(curentd1$Nomfun$label[input$main_plot_selected==curentd1$Nomfun$id])
-      output$zoomin2<-renderText(paste(func))
-      
-    }
-    
-  })
-  
-  
   observe({
     
     if(!is.null(input$main_plot1_selected) && input$main_plot1_selected!="")
@@ -142,13 +124,13 @@ observe({
   
   if(!is.null(input$main_plot_selected) && input$main_plot_selected!="")
   {
-    output$Groupebutton<-renderUI({
-      fluidRow(
-        h3("Zoom"),
-        actionButton("zoom", "Launch zoom on :",icon = icon("line-chart")),
-        h3(textOutput({"zoomin2"})),align="center"
-        
-      )
+    
+    func<-as.character(curentd1$Nomfun$label[input$main_plot_selected==curentd1$Nomfun$id])
+    
+    output$Groupebutton<-renderUI({      
+
+        div(hr(), actionButton("zoom", paste0("Launch zoom on : ", func),icon = icon("line-chart")), align = "center")
+
     })
   }
   else

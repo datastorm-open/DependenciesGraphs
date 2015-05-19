@@ -13,13 +13,12 @@ dashboardPage(
                 tabPanel("Packages",
                          fluidRow(
                            
-                           
-                           column(
-                             div(
-                               selectizeInput('Pack', h3('Package(s)'), choices = installed.packages()[,1], multiple = T),
-                               actionButton("GOb", "Launch",icon = icon("line-chart")),align="center"
-                             )
-                             ,width = 12),
+                           fluidRow(
+
+                             column(4, div(h3('Package(s) :'), align = "center")),
+                             column(4, br(), selectizeInput('Pack', NULL, choices = installed.packages()[,1], multiple = T)),
+                             column(4, br(), div(actionButton("GOb", "Launch",icon = icon("line-chart")), align = "center"))
+                             ),
                            
                            fluidRow(
                              column(
