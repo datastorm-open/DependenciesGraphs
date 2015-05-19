@@ -8,5 +8,5 @@ Maintainer: Titouan Robert <tr@datak.fr>
 Description: Dependencies visualization between functions and environments 
 License: Free
 LazyData: TRUE
-Depends: visNetwork,shinydashboard
-Imports: mvbutils,rlist,XML
+Depends: visNetwork,shinydashboard, XML
+Imports: mvbutils, rlist, tools
