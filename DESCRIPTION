@@ -9,4 +9,4 @@ Description: Dependencies visualization between functions and environments
 License: Free
 LazyData: TRUE
 Depends: visNetwork,shinydashboard, XML
-Imports: mvbutils, rlist
+Imports: mvbutils, rlist, tools
