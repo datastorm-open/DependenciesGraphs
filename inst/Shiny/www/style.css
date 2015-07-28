@@ -32,24 +32,24 @@ button.btn.btn-default.action-button:hover {
 
 .shiny-datatable-output table
 {
-    border: 3px solid green;
+    border: 3px solid blue;
      text-align: center;
      font-size: 20px;
 }
 
 .shiny-datatable-output td{
-      border: 1px solid green;
+      border: 1px solid blue;
         background-color: #FCFCFC;
 }
 
 .shiny-datatable-output thead{
       text-align: center;
               background-color: #FFFFFF;
-      border-bottom: 3px solid green;
+      border-bottom: 3px solid blue;
 }
 
 .shiny-datatable-output th{
 
         text-align: center;
-        border: 1px solid green;
+        border: 1px solid blue;
 }
