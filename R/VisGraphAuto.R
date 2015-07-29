@@ -252,8 +252,11 @@ VisFunsmatrice <- function(Mat)
 plot.dependenciesGraphs <- function(object,block=FALSE){
   visNetwork(object[[1]], object[[2]]) %>% visEdges(arrow = "from") %>%
     visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE)%>%
-    visInteraction(dragNodes = !block)
+    visInteraction(dragNodes = !block)%>%
+    visPhysics(solver="repulsion",stabilization=list(enabled=FALSE,iterations=5000,onlyDynamicEdges=FALSE))
 }
+
+
 
 #' Launch shiny app
 #' 
