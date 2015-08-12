@@ -1,36 +1,98 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Gestion des arrondis</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Give best model</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body>
 
-<table width="100%" summary="page for roundRTE"><tr><td>roundRTE</td><td style="text-align: right;">R Documentation</td></tr></table>
+<table width="100%" summary="page for ModelSelection"><tr><td>ModelSelection</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Gestion des arrondis</h2>
+<h2>Give best model</h2>
 
 <h3>Description</h3>
 
-<p>La première décimale non significative égale à 0, 1, 2, 3 ,4 ou 5 n’incrémente pas
-la décimale significative.
-La première décimale non significative égale à 6, 7, 8 ou 9 incrémente la décimale
-significative.
+<p>Give best model
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-roundRTE(r, accuracy = 0.1)
+ModelSelection(Y, Xchoices, Xothers = NULL, Xfact = NULL,
+  Groupchoices = NULL, BSchoices = "ps", BSothers = "ps", Kchoices = 5,
+  Kothers = 5, dfCalculation = 1, max.iter = 20000, eps = 0.005,
+  nlamdba = 100, model = FALSE, criterion = "BIC")
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>r</code></td>
+<tr valign="top"><td><code>Y</code></td>
 <td>
-<p>number to be rounded</p>
+<p>: response variable</p>
+</td></tr>
+<tr valign="top"><td><code>Xchoices</code></td>
+<td>
+<p>: Dataframe or matrix which only numeric variable. Procedure of variable selection will use ONLY on this variables</p>
+</td></tr>
+<tr valign="top"><td><code>Xothers</code></td>
+<td>
+<p>: Dataframe or matrix</p>
+</td></tr>
+<tr valign="top"><td><code>Xfact</code></td>
+<td>
+<p>: Dataframe or matrix, factoriel data</p>
+</td></tr>
+<tr valign="top"><td><code>Groupchoices</code></td>
+<td>
+<p>: Xchoices groups, default 1:ncol(Xchoices), length should be ncol(Xchoices), shoold be consecutive interger and begening to 1. can be c(1,1,1,2,3). See ?grpreg.</p>
+</td></tr>
+<tr valign="top"><td><code>BSchoices</code></td>
+<td>
+<p>: ?? should be in :</p>
+</td></tr>
+<tr valign="top"><td><code>BSothers</code></td>
+<td>
+<p>: ?? should be in :</p>
+</td></tr>
+<tr valign="top"><td><code>Kchoices</code></td>
+<td>
+<p>: degrees of freedom associated to B-spline for Xchoices. Should be of length 1. Shoold be &gt;4</p>
+</td></tr>
+<tr valign="top"><td><code>Kothers</code></td>
+<td>
+<p>: degrees of freedom associated to B-spline for Xothers. Can be of length 1 or ncol(Xothers).</p>
+</td></tr>
+<tr valign="top"><td><code>dfCalculation</code></td>
+<td>
+<p>: ????</p>
+</td></tr>
+<tr valign="top"><td><code>max.iter</code></td>
+<td>
+<p>:</p>
+</td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+<p>:</p>
+</td></tr>
+<tr valign="top"><td><code>nlamdba</code></td>
+<td>
+<p>:</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>: If true, best model is return by criterion. Default is false</p>
+</td></tr>
+<tr valign="top"><td><code>criterion</code></td>
+<td>
+<p>: criterion use, can be &quot;BIC&quot; , &quot;AIC&quot; or &quot;GCV&quot;, possible to choose 2 or 3</p>
 </td></tr>
 </table>
+
+
+<h3>Value</h3>
+
+<p>Named list which model selected
+</p>
 
 
 </body></html>

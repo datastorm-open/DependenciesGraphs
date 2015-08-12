@@ -35,7 +35,6 @@ shinyServer(function(input, output,session) {
           
         }
         
-        
         optionsDT_fixe$drawCallback<-I("function( settings ) {document.getElementById('tabledep').style.width = '400px';}")
         ##Output first graph
         df<-data.frame(Function=func,"Import" = nb.func.master,"Imported by"=nb.func.slave)
@@ -125,6 +124,30 @@ shinyServer(function(input, output,session) {
       }
     })
   })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  output$chossefunctionplot<-renderVisNetwork({
+    input$makegraph
+    isolate({
+
+              sapply(input$packageslist,function(x){library(x,character.only = TRUE)})
+      plot(allDepFunction(input$packageslist,unlist(strsplit(input$functionlist,";")) ), block = TRUE)
+  
+    })
+  })
+  
+  
+  
+  
+  
   
   observe({
     

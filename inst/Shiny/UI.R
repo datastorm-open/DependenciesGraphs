@@ -73,7 +73,22 @@ dashboardPage(
                              visNetworkOutput("plotscript", width = "100%",height = "700px")
                              ,width = 12)
                          )
+                ),
+                
+                tabPanel("FunctionZomm",
+                         
+                         
+                         fluidRow(
+                           box(
+                             selectizeInput(inputId = "packageslist" , "List package",choices = installed.packages()[,1], multiple = T),
+                             textInput(inputId = "functionlist" , "List function sep by ;"),
+                             actionButton("makegraph", "Make graph"),
+                             visNetworkOutput("chossefunctionplot", width = "100%",height = "700px")
+                             ,width = 12)
+                         )
                 )
+                
+                
     )
   )
 )
