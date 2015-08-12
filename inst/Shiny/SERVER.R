@@ -130,18 +130,31 @@ shinyServer(function(input, output,session) {
   
   
   
-  
-  
-  
+
+  ###chossefunction
+
+  observe({
+    input$chargedf
+    isolate({
+    input$packageslist
+    sapply(input$packageslist,function(x){library(x,character.only = TRUE)})
+    allFun <- unique(unlist(sapply(input$packageslist,function(x){allFunctionEnv(paste0("package:",x))})))
+
+    updateSelectizeInput(session,inputId = "functionlist" , choices =allFun)
+    })
+  })
   
   output$chossefunctionplot<-renderVisNetwork({
     input$makegraph
-    isolate({
 
-              sapply(input$packageslist,function(x){library(x,character.only = TRUE)})
+    isolate({
+      if(input$makegraph>=1)
+      {
+         
       plot(allDepFunction(input$packageslist,unlist(strsplit(input$functionlist,";")) ), block = TRUE)
-  
+      }
     })
+    
   })
   
   

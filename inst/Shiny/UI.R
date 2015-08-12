@@ -80,11 +80,13 @@ dashboardPage(
                          
                          fluidRow(
                            box(
-                             selectizeInput(inputId = "packageslist" , "List package",choices = installed.packages()[,1], multiple = T),
-                             textInput(inputId = "functionlist" , "List function sep by ;"),
-                             actionButton("makegraph", "Make graph"),
+                             fluidRow(
+                             column(width=8,selectizeInput(inputId = "packageslist" , "List package",choices = installed.packages()[,1], multiple = TRUE)),
+                             column(width=4,div(actionButton("chargedf", "Find functions"),align="center")),
+                             column(width=12,selectizeInput(inputId = "functionlist" , "List function", choices = NULL, multiple = TRUE)),
+                             column(width=12,div(actionButton("makegraph", "Make graph"),align = "center")),
                              visNetworkOutput("chossefunctionplot", width = "100%",height = "700px")
-                             ,width = 12)
+                             ),width = 12)
                          )
                 )
                 

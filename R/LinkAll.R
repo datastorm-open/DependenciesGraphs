@@ -1,4 +1,3 @@
-
 #' For a function, give all dependencies
 #' @param envir : environments where the function should search dependencies.
 #' @param name.function : function name (character)
