@@ -1,98 +1,196 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Give best model</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Shows which functions call what</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body>
 
-<table width="100%" summary="page for ModelSelection"><tr><td>ModelSelection</td><td style="text-align: right;">R Documentation</td></tr></table>
+<table width="100%" summary="page for foodweb"><tr><td>foodweb</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Give best model</h2>
+<h2>Shows which functions call what</h2>
 
 <h3>Description</h3>
 
-<p>Give best model
+<p><code>foodweb</code> is applied to a group of functions (e.g. all those in a workspace); it produces a graphical display showing the hierarchy of which functions call which other ones. This is handy, for instance, when you have a great morass of functions in a workspace, and want to figure out which ones are meant to be called directly. <code>callers.of(funs)</code> and <code>callees.of(funs)</code> show which functions directly call, or are called directly by, <code>funs</code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-ModelSelection(Y, Xchoices, Xothers = NULL, Xfact = NULL,
-  Groupchoices = NULL, BSchoices = "ps", BSothers = "ps", Kchoices = 5,
-  Kothers = 5, dfCalculation = 1, max.iter = 20000, eps = 0.005,
-  nlamdba = 100, model = FALSE, criterion = "BIC")
+foodweb( funs, where=1, charlim=80, prune=character(0), rprune, ancestors=TRUE, descendents=TRUE, plotting =TRUE, plotmath=FALSE, generics=c( "c","print","plot", "["), lwd=0.5, xblank=0.18, border="transparent", boxcolor="white", textcolor="black", color.lines=TRUE, highlight="red", ...)
+## S3 method for class 'foodweb'
+plot(x, textcolor, boxcolor, xblank, border, textargs = list(), use.centres = TRUE, color.lines = TRUE, poly.args = list(), expand.xbox = 1.05, expand.ybox = expand.xbox * 1.2, plotmath = FALSE, cex=par( "cex"), ...) # plot.foodweb
+callers.of( funs, fw=foodweb( plotting=FALSE))
+callees.of( funs, fw=foodweb( plotting=FALSE))
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>Y</code></td>
+<tr valign="top"><td><code> funs</code></td>
 <td>
-<p>: response variable</p>
+<p>character vector OR (in <code>foodweb</code> only) the result of a previous <code>foodweb</code> call</p>
 </td></tr>
-<tr valign="top"><td><code>Xchoices</code></td>
+<tr valign="top"><td><code> where</code></td>
 <td>
-<p>: Dataframe or matrix which only numeric variable. Procedure of variable selection will use ONLY on this variables</p>
+<p>position(s) on search path, or an environment, or a list of environments</p>
 </td></tr>
-<tr valign="top"><td><code>Xothers</code></td>
+<tr valign="top"><td><code> charlim</code></td>
 <td>
-<p>: Dataframe or matrix</p>
+<p>controls maximum number of characters per horizontal line of plot</p>
 </td></tr>
-<tr valign="top"><td><code>Xfact</code></td>
+<tr valign="top"><td><code> prune</code></td>
 <td>
-<p>: Dataframe or matrix, factoriel data</p>
+<p>character vector. If omitted, all <code>funs</code> will be shown; otherwise, only ancestors and descendants of functions in <code>prune</code> will be shown. Augments <code>funs</code> if required.</p>
 </td></tr>
-<tr valign="top"><td><code>Groupchoices</code></td>
+<tr valign="top"><td><code> rprune</code></td>
 <td>
-<p>: Xchoices groups, default 1:ncol(Xchoices), length should be ncol(Xchoices), shoold be consecutive interger and begening to 1. can be c(1,1,1,2,3). See ?grpreg.</p>
+<p>regexpr version of <code>prune</code>; <code>prune &lt;- funs %matching% rprune</code>. Does NOT augment <code>funs</code>. Overrides <code>prune</code> if set.</p>
 </td></tr>
-<tr valign="top"><td><code>BSchoices</code></td>
+<tr valign="top"><td><code> ancestors</code></td>
 <td>
-<p>: ?? should be in :</p>
+<p>show ancestors of <code>prune</code> functions?</p>
 </td></tr>
-<tr valign="top"><td><code>BSothers</code></td>
+<tr valign="top"><td><code> descendents</code></td>
 <td>
-<p>: ?? should be in :</p>
+<p>show descendents of <code>prune</code> functions?</p>
 </td></tr>
-<tr valign="top"><td><code>Kchoices</code></td>
+<tr valign="top"><td><code> plotting</code></td>
 <td>
-<p>: degrees of freedom associated to B-spline for Xchoices. Should be of length 1. Shoold be &gt;4</p>
+<p>graphical display?</p>
 </td></tr>
-<tr valign="top"><td><code>Kothers</code></td>
+<tr valign="top"><td><code> plotmath</code></td>
 <td>
-<p>: degrees of freedom associated to B-spline for Xothers. Can be of length 1 or ncol(Xothers).</p>
+<p>leave alone</p>
 </td></tr>
-<tr valign="top"><td><code>dfCalculation</code></td>
+<tr valign="top"><td><code> generics</code></td>
 <td>
-<p>: ????</p>
+<p>calls TO functions in <code>generics</code> won't be shown</p>
 </td></tr>
-<tr valign="top"><td><code>max.iter</code></td>
+<tr valign="top"><td><code> lwd</code></td>
 <td>
-<p>:</p>
+<p>see <code>par</code></p>
 </td></tr>
-<tr valign="top"><td><code>eps</code></td>
+<tr valign="top"><td><code> xblank</code></td>
 <td>
-<p>:</p>
+<p>leave alone</p>
 </td></tr>
-<tr valign="top"><td><code>nlamdba</code></td>
+<tr valign="top"><td><code> border</code></td>
 <td>
-<p>:</p>
+<p>border around name of each object (<code>TRUE/FALSE</code>)</p>
 </td></tr>
-<tr valign="top"><td><code>model</code></td>
+<tr valign="top"><td><code> boxcolor</code></td>
 <td>
-<p>: If true, best model is return by criterion. Default is false</p>
+<p>background colour of each object's text box</p>
 </td></tr>
-<tr valign="top"><td><code>criterion</code></td>
+<tr valign="top"><td><code> textcolor</code></td>
 <td>
-<p>: criterion use, can be &quot;BIC&quot; , &quot;AIC&quot; or &quot;GCV&quot;, possible to choose 2 or 3</p>
+<p>of each object</p>
+</td></tr>
+<tr valign="top"><td><code> color.lines</code></td>
+<td>
+<p>will linking lines be coloured according to the level they originate at?</p>
+</td></tr>
+<tr valign="top"><td><code> highlight</code></td>
+<td>
+<p>seemingly not used</p>
+</td></tr>
+<tr valign="top"><td><code> cex</code></td>
+<td>
+<p>text size (see &quot;cex&quot; in <code>?par</code>)</p>
+</td></tr>
+<tr valign="top"><td><code> ...</code></td>
+<td>
+<p>passed to <code>plot.foodweb</code> and thence to <code>par</code></p>
+</td></tr>
+<tr valign="top"><td><code> textargs</code></td>
+<td>
+<p>not currently used</p>
+</td></tr>
+<tr valign="top"><td><code> use.centres</code></td>
+<td>
+<p>where to start/end linking lines. <code>TRUE</code> is more accurate but less tidy with big webs.</p>
+</td></tr>
+<tr valign="top"><td><code> expand.xbox</code></td>
+<td>
+<p>how much horizontally bigger to make boxes relative to text?</p>
+</td></tr>
+<tr valign="top"><td><code> expand.ybox</code></td>
+<td>
+<p>how much vertically bigger to ditto?</p>
+</td></tr>
+<tr valign="top"><td><code> poly.args</code></td>
+<td>
+<p>other args to <code>rect</code> when boxes are drawn</p>
+</td></tr>
+<tr valign="top"><td><code> fw</code></td>
+<td>
+<p>an object of class <code>foodweb</code>, or the <code>funmat</code> element thereof (see <b>Value</b>)</p>
+</td></tr>
+<tr valign="top"><td><code> x</code></td>
+<td>
+<p>a foodweb (as an argument to <code>plot.foodweb</code>)</p>
 </td></tr>
 </table>
 
 
+<h3>Details</h3>
+
+<p>The main value is in the graphical display. At the top (&quot;level 0&quot;), functions which don't call any others, and aren't called by any others, are shown without any linking lines. Functions which do call others, but aren't called themselves, appear on the next layer (&quot;level 1&quot;), with lines linking them to functions at other levels. Functions called only by level 1 functions appear next, at level 2, and so on. Functions which call each other will always appear on the same level, linked by a bent double arrow above them. The colour of a linking line shows what level of the hierarchy it came from.
+</p>
+<p><code>foodweb</code> makes some effort to arrange the functions on the display to keep the number of crossing lines low, but this is a hard problem! Judicious use of <code>prune</code> will help keep the display manageable. Perhaps counterintuitively, any functions NOT linked to those in <code>prune</code> (which all will be, by default) will be pruned from the display.
+</p>
+<p><code>foodweb</code> tries to catch names of functions that are stored as text, and it will pick up e.g. <code>glm</code> in <code>do.call( "glm", glm.args)</code>. There are limits to this, of course (?methods?).
+</p>
+<p>The argument list may be somewhat daunting, but the only ones normally used are <code>funs</code>, <code>where</code>, and <code>prune</code>. Also, to get a readable display, you may need to reduce <code>cex</code> and/or <code>charlim</code>. A number of the less-obvious arguments are set by other functions which rely on <code>plot.foodweb</code> to do their display work. Several may disappear in future versions.
+</p>
+<p>If the display from <code>foodweb</code> is unclear, try <code>foodweb( .Last.value, cex=&lt;&lt;something below 1&gt;&gt;, charlim=&lt;&lt;something probably less than 100&gt;&gt;)</code>. This works because <code>foodweb</code> will also accept a <code>foodweb</code>-class object as its argument. You can also assign the result of <code>foodweb</code> to a variable, which is useful if you expect to do a lot of tinkering with the display, or to inspect the who-calls-whom matrix by hand.
+</p>
+<p><code>callers.of</code> and <code>callees.of</code> process the output of <code>foodweb</code>, looking for immediate dependencies only. The second argument will call <code>foodweb</code> by default, so it may be more efficient to call <code>foodweb</code> first and assign the result to a variable.
+</p>
+
+
 <h3>Value</h3>
 
-<p>Named list which model selected
+<p><code>foodweb</code> returns an object of (S3) class <code>foodweb</code>. This has three components:
 </p>
+<table summary="R valueblock">
+<tr valign="top"><td><code> funmat</code></td>
+<td>
+<p>a matrix of 0s and 1s showing what (row) calls what (column). The <code>dimnames</code> are the function names.</p>
+</td></tr>
+<tr valign="top"><td><code> x</code></td>
+<td>
+<p>shows the x-axis location of the centre of each function's name in the display, in <code>par("usr")</code> units</p>
+</td></tr>
+<tr valign="top"><td><code> level</code></td>
+<td>
+<p>shows the y-axis location of the centre of each function's name in the display, in <code>par("usr")</code> units. For small numbers of functions, this will be an integer; for larger numbers, there will some adjustment around the nearest integer</p>
+</td></tr>
+</table>
+<p>Apart from graphical annotation, the main useful thing is <code>funmat</code>, which can be used to work out the &quot;pecking order&quot; and e.g. which functions directly call a given function. <code>callers.of</code> and <code>callees.of</code> return a character vector of function names.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+foodweb( ) # functions in .GlobalEnv
+foodweb( where="package:mvbutils", cex=0.4, charlim=60) # yikes!
+foodweb( c( find.funs("package:mvbutils"), "paste"))
+# functions in .GlobalEnv, and "paste"
+foodweb( find.funs("package:mvbutils"), prune="paste")
+# only those parts of the tree connected to "paste";
+# NB that funs &lt;- unique( c( funs, prune)) inside "foodweb"
+foodweb( where="package:mvbutils", rprune="aste")
+# doesn't include "paste" as it's not in "mvbutils", and rprune doesn't augment funs
+foodweb( where="package:mvbutils", rprune="name") # does work
+foodweb( where=asNamespace( "mvbutils")) # secret stuff
+fw &lt;- foodweb( where="package:mvbutils")
+fw$funmat # a big matrix
+callers.of( "mlocal", fw)
+callees.of( find.funs() %matching% "name", fw)
+</pre>
 
 
 </body></html>

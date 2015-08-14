@@ -7,7 +7,7 @@
 allFunctionEnv(name, envir)
 }
 \arguments{
-\item{envir}{: Environment, try "search()" to obtain a list of loaded environments}
+\item{envir}{: Environment, try 'search()' to obtain a list of loaded environments}
 }
 \value{
 Names of included functions in this environment.

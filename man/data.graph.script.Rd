@@ -13,7 +13,7 @@ data.graph.script(path)
 Dependencies for scripts
 }
 \examples{
-dep <- data.graph.script("MyRScrpt.R")
+dep <- data.graph.script('MyRScrpt.R')
 plot(dep)
 }
 

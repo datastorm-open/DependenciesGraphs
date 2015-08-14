@@ -16,7 +16,7 @@ List with nodes and edges informations. Needed for visNetwork visualization.
 Return all dependencies between functions in an environment
 }
 \examples{
-dep <- envirDependencies("package:ibr")
+dep <- envirDependencies('package:ibr')
 plot(dep)
 }
 

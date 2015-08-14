@@ -16,7 +16,7 @@ Plot network for dependenciesGraphs object. Using visNetwork package.
 Plot network for dependenciesGraphs object. Using visNetwork package.
 }
 \examples{
-dep <- funDependencies("package:ibr","iterchoiceS1")
+dep <- funDependencies('package:ibr','iterchoiceS1')
 plot(dep)
 }
 
