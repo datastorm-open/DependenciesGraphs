@@ -2,9 +2,6 @@ optionsDT_fixe <- list(paging = FALSE, searching = FALSE, bInfo = FALSE, search.
 
 
 shinyServer(function(input, output, session) {
-    
-    
-    
     observe({
         input$GOPackage
         isolate({
@@ -83,8 +80,8 @@ shinyServer(function(input, output, session) {
                 optionsDT_fixe$drawCallback <- I("function( settings ) {document.getElementById('datatable2').style.width = '100px';}")
                 output$datatable2 <- renderDataTable(data.frame(Number.of.functions = nb.fun), options = optionsDT_fixe)
                 
-                output$zoomin <- renderText(paste("Zoom on package : ", func))
-                output$info <- renderText(paste("Information on : ", func))
+                output$zoomin <- renderText(paste("Zoom on package ", func))
+                output$info <- renderText(paste("Information on package ", func))
                 curentd3 <<- func
                 
                 output$main_plot1 <- renderVisNetwork({
@@ -128,12 +125,6 @@ shinyServer(function(input, output, session) {
         })
     })
     
-    
-    
-    
-    
-    
-    
     ### chossefunction
     
     observe({
@@ -162,11 +153,6 @@ shinyServer(function(input, output, session) {
         })
         
     })
-    
-    
-    
-    
-    
     
     observe({
         
@@ -231,10 +217,3 @@ shinyServer(function(input, output, session) {
         }
     })
 })
-
-
-
-
-
-
- 

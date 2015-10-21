@@ -1,12 +1,12 @@
 Package: DependenciesGraphs
 Type: Package
 Title: Dependencies visualization between functions and environments 
-Version: 0.1
-Date: 2015-04-27
+Version: 0.2
+Date: 2015-10-21
 Author: Titouan Robert
 Maintainer: Titouan Robert <tr@datak.fr>
 Description: Dependencies visualization between functions and environments 
 License: Free
 LazyData: TRUE
-Depends: visNetwork(>= 0.0.4),shinydashboard, XML
+Depends: visNetwork(>= 0.1.0),shinydashboard, XML
 Imports: mvbutils, rlist, tools

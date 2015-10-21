@@ -9,52 +9,59 @@ dashboardPage(
                 # The id lets us use input$tabset1 on the server to find the current tab 
                 tabPanel("Packages",
                          fluidRow(
-                           column(4, div(h3('Package(s) :'), align = "center")),
-                           column(4, br(), selectizeInput('packages', NULL, choices = installed.packages()[,1], multiple = T)),
-                           column(4, br(), div(actionButton("GOPackage", "Launch",icon = icon("line-chart")), align = "center"))
+                           column(3, div(h3('Package(s) selection :'), align = "center")),
+                           column(6, br(), selectInput('packages', NULL, choices = installed.packages()[,1], multiple = T, width = "100%")),
+                           column(3, br(), div(actionButton("GOPackage", "Launch",icon = icon("line-chart")), align = "center"))
                          ),
                          hr(),
                          
                          fluidRow(
-                           column(
-                             box(
-                               h3("Dependencies between package(s)"),
-                               visNetworkOutput("main_plot", width = "100%",height = "600px")
-                               ,width = 12
-                             ),
-                             width=8),
-                           
-                           column(
+                           box(
+                             solidHeader = TRUE, collapsible = TRUE, title = "Dependencies between package(s)",
+                             status = "primary",
+                             visNetworkOutput("main_plot", width = "100%",height = "750px"),
+                             br()
+                             ,width = 12
+                           ),
+                           box(
+                             solidHeader = TRUE, collapsible = TRUE, title = "Informations",
+                             status = "primary",
                              div(
-                               h3(textOutput("titledatatabel")),
                                dataTableOutput("tabledep"),
                                uiOutput("Groupebutton"),
                                align="center"
                              ), 
-                             width=4)
+                             width=12)
                          )
+                         
                 ),
                 tabPanel("Functions",
                          
                          fluidRow(
                            column(4, div(h3('Package :'), align = "center")),
-                           column(4, br(), selectizeInput('package', NULL, choices = installed.packages()[,1], multiple = FALSE)),
+                           column(4, br(), selectInput('package', NULL, choices = installed.packages()[,1], multiple = FALSE, width = "100%")),
                            column(4, br(), div(actionButton("GOFunc2", "Launch",icon = icon("line-chart")), align = "center"))
                          ),
                          hr(),
                          
                          fluidRow(
                            box(
-                             h3(textOutput({"zoomin"})),
-                             visNetworkOutput("main_plot1", width = "100%",height = "600px")
-                             ,width = 8),
-                           column(
+                             solidHeader = TRUE, collapsible = TRUE, title = "Dependencies between functions",
+                             status = "primary",
+                             div(h4(textOutput("zoomin")), align = "center"),
+                             visNetworkOutput("main_plot1", width = "100%",height = "750px"),
+                             br()
+                             ,width = 12
+                           ),
+                           box(
+                             solidHeader = TRUE, collapsible = TRUE, title = "Informations",
+                             status = "primary",
                              div(
-                               h3(textOutput({"info"})),
+                               # h4(textOutput("info")),
                                dataTableOutput("datatable2")
                                ,align="center"
-                             ),width = 4
-                           )
+                             ),
+                             width=12)
                          ),
                          
                          fluidRow(
@@ -63,17 +70,17 @@ dashboardPage(
                            )
                          )
                 ),
-#                 tabPanel("Script",
-#                          
-#                          
-#                          fluidRow(
-#                            box(
-#                              fileInput('file1', 'Choose R File',
-#                                        accept=NULL),
-#                              visNetworkOutput("plotscript", width = "100%",height = "700px")
-#                              ,width = 12)
-#                          )
-#                 ),
+                #                 tabPanel("Script",
+                #                          
+                #                          
+                #                          fluidRow(
+                #                            box(
+                #                              fileInput('file1', 'Choose R File',
+                #                                        accept=NULL),
+                #                              visNetworkOutput("plotscript", width = "100%",height = "700px")
+                #                              ,width = 12)
+                #                          )
+                #                 ),
                 
                 tabPanel("Custom",
                          
@@ -81,12 +88,24 @@ dashboardPage(
                          fluidRow(
                            box(
                              fluidRow(
-                             column(width=8,selectizeInput(inputId = "packageslist" , "List package",choices = installed.packages()[,1], multiple = TRUE)),
-                             column(br(),width=4,div(actionButton("chargedf", "Find functions"),align="center")),
-                             column(width=8,selectizeInput(inputId = "functionlist" , "List function", choices = NULL, multiple = TRUE)),
-                             column(br(),width=4,div(actionButton("makegraph", "Make graph"),align = "center")),
-                             visNetworkOutput("chossefunctionplot", width = "100%",height = "700px")
-                             ),width = 12)
+                               column(width=4,
+                                      selectizeInput(inputId = "packageslist" , "Package(s) :", choices = installed.packages()[,1], multiple = TRUE)
+                               ),
+                               column(width=2, 
+                                      br(), div(actionButton("chargedf", "Find functions", style = "padding: 8px 20px 8px 20px;"),align="center")
+                               ),
+                               column(width=4,
+                                      selectizeInput(inputId = "functionlist" , "Function(s) :", choices = NULL, multiple = TRUE)
+                               ),
+                               column(width=2, 
+                                      br(), div(actionButton("makegraph", "Make graph", style = "padding: 8px 20px 8px 20px;"),align = "center")
+                               )
+                             ),
+                             
+                             hr(),
+                             visNetworkOutput("chossefunctionplot", width = "100%",height = "750px"),
+                             br(),
+                             width = 12)
                          )
                 )
                 
