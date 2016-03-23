@@ -5,7 +5,7 @@
 Package is actually only available on github : 
 
 ````
-devtools::install_github("DataKnowledge/DependenciesGraphs")
+devtools::install_github("datastorm-open/DependenciesGraphs")
 ````
 
 ##Usage
@@ -41,4 +41,4 @@ launch.app()
 ````
 
 ####More exemple 
-http://dataknowledge.github.io/DependenciesGraphs/
+http://dataknowledge.github.io/datastorm-open/
