@@ -1,6 +1,6 @@
 # DependenciesGraphs : an R package for dependencies visualization between packages and functions
 
-##Installation
+## Installation
 
 Package is actually only available on github : 
 
@@ -8,7 +8,7 @@ Package is actually only available on github :
 devtools::install_github("datastorm-open/DependenciesGraphs")
 ````
 
-##Usage
+## Usage
 
 For use directly in R, you must first load package(s) using ````library```` function :
 
@@ -35,10 +35,10 @@ dep <- funDependencies("package:ibr","iterchoiceS1")
 plot(dep)
 ````
 
-####Explore your R with the shiny app
+#### Explore your R with the shiny app
 ````
 launch.app()
 ````
 
-####More exemple 
+#### More exemple 
 http://datastorm-open.github.io/DependenciesGraphs/
