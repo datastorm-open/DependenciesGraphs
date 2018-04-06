@@ -32,16 +32,27 @@ shinyServer(function(input, output, session) {
                 
                 optionsDT_fixe$drawCallback <- I("function( settings ) {document.getElementById('tabledep').style.width = '400px';}")
                 ## Output first graph
-                df <- data.frame(Function = func, Import = nb.func.master, `Imported by` = nb.func.slave)
+                df <- data.frame(Package = func, Import = nb.func.master, `Imported by` = nb.func.slave)
                 
                 
                 
                 output$tabledep <- renderDataTable({
                   df
                 }, options = optionsDT_fixe)
-                # print(data)
+                
                 output$main_plot <- renderVisNetwork({
-                  plot(data, block = TRUE)
+                  net <- plot(data, block = TRUE)
+                  
+                  # add legend
+                  data_legend <- unique(data2$fromto[, c("title", "color")])
+                  data_legend$label <- gsub("<p>", "", data_legend$title, fixed = TRUE)
+                  data_legend$label <- gsub("</p>", "", data_legend$label, fixed = TRUE)
+                  data_legend$title <- NULL
+                  data_legend$arrows <- "to"
+                  
+                  net %>%
+                    visLegend(addEdges = data_legend, useGroups = FALSE, width = 0.1)
+                  
                 })
                 curentd1 <<- data
                 output$titledatatabel <- renderText({

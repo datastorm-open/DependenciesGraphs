@@ -12,15 +12,14 @@ allDepFunction <- function(envir, name.functions) {
     
     link <- toutfonc
     functions.list <- unique(as.character(unlist(c(toutfonc))))
-    
+
     Visdata <- list()
     
     Nomfun <- functions.list
     Nomfun <- data.frame(cbind(id = 1:length(Nomfun), label = Nomfun))
-    
-    
-    func.link <- sort(unique(c(as.character(link[, 1]), as.character(link[, 2]))))
-    func.nom <- sort(unique(as.character(Nomfun[, 2])))
+  
+    # func.link <- sort(unique(c(as.character(link[, 1]), as.character(link[, 2]))))
+    # func.nom <- sort(unique(as.character(Nomfun[, 2])))
     
     if (!is.null(link)) {
         fromto <- matrix(0, ncol = dim(link)[2], nrow = dim(link)[1])

@@ -174,6 +174,9 @@ prepareToVis <- function(link, functions.list = NULL) {
 #' dep <- funDependencies('package:ibr','iterchoiceS1')
 #' plot(dep)
 #' 
+#' # size
+#' plot(dep, height = "800px", width = "100%")
+#' 
 #' @export
 funDependencies <- function(envir, name.function) {
     visdata <- prepareToVis(linksForOne(envir, name.function))
@@ -189,6 +192,9 @@ funDependencies <- function(envir, name.function) {
 #' 
 #' dep <- envirDependencies('package:ibr')
 #' plot(dep)
+#' 
+#' # size
+#' plot(dep, height = "800px", width = "100%")
 #' 
 #' @export
 envirDependencies <- function(envir) {
@@ -234,18 +240,25 @@ VisFunsmatrice <- function(Mat) {
 #' Plot network for dependenciesGraphs object. Using visNetwork package.
 #' 
 #' @param object : dependenciesGraphs object. 
+#' @param width	: Width (optional, defaults to automatic sizing)
+#' @param height : Height (optional, defaults to automatic sizing)
 #' 
 #' @examples
 #' 
 #' dep <- funDependencies('package:ibr','iterchoiceS1')
 #' plot(dep)
 #' 
+#' # size
+#' plot(dep, height = "800px", width = "100%")
+#' 
 #' @export 
 #' @method plot dependenciesGraphs
-plot.dependenciesGraphs <- function(object, block = FALSE) {
-    visNetwork(object[[1]], object[[2]]) %>% visEdges(arrows = "from") %>% visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>% 
-        visInteraction(dragNodes = !block) %>% visPhysics(solver = "repulsion", stabilization = list(enabled = FALSE, iterations = 5000, 
-        onlyDynamicEdges = FALSE))
+plot.dependenciesGraphs <- function(object, block = FALSE, width = NULL, height = NULL) {
+    visNetwork(object[[1]], object[[2]], width = width, height = height) %>% 
+    visEdges(arrows = "from") %>% 
+    visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>% 
+        visInteraction(dragNodes = !block) %>% 
+    visPhysics(solver = "repulsion", stabilization = list(enabled = FALSE, iterations = 5000, onlyDynamicEdges = FALSE))
 }
 
 
