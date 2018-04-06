@@ -10,3 +10,4 @@ License: Free
 LazyData: TRUE
 Depends: visNetwork(>= 0.2.1),shinydashboard, XML
 Imports: mvbutils, rlist, tools
+RoxygenNote: 6.0.1
