@@ -4,7 +4,7 @@
 
 Package is actually only available on github : 
 
-````
+````R
 devtools::install_github("datastorm-open/DependenciesGraphs")
 ````
 
@@ -12,13 +12,13 @@ devtools::install_github("datastorm-open/DependenciesGraphs")
 
 For use directly in R, you must first load package(s) using ````library```` function :
 
-````
+````R
 library("ibr")
 ````
 
 #### All dependencies between functions in an environment
 
-````
+````R
 # Prepare data
 dep <- envirDependencies("package:ibr")
 
@@ -27,7 +27,7 @@ plot(dep)
 ````
 #### All dependencies from a function in an environment
 
-````
+````R
 # Prepare data
 dep <- funDependencies("package:ibr","iterchoiceS1")
 
@@ -36,7 +36,7 @@ plot(dep)
 ````
 
 #### Explore your R with the shiny app
-````
+````R
 launch.app()
 ````
 
