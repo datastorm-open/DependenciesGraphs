@@ -165,7 +165,7 @@ prepareToVis <- function(link, functions.list = NULL) {
 
 
 #' Return all dependencies from a function in an environment
-#' @param envir : environment where you want to scherch dependencies
+#' @param envir : environment where you want to search dependencies
 #' @param name.function : Function name (in character)
 #' @return List with nodes and edges informations. Needed for visNetwork visualization.
 #'
