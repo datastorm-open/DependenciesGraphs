@@ -261,7 +261,30 @@ plot.dependenciesGraphs <- function(object, block = FALSE, width = NULL, height 
     visPhysics(solver = "repulsion", stabilization = list(enabled = FALSE, iterations = 5000, onlyDynamicEdges = FALSE))
 }
 
+plot.dependenciesGraphs <- function(object, block = FALSE, width = NULL, height = NULL) {
+    # Show circular reference in red
+    red_if_circular <- function(edges) {
+        from_to <- paste(edges$from, edges$to)
+        to_from <- paste(edges$to, edges$from)
+        circular <- from_to %in% to_from
+        ifelse(circular, "red", "#848484")
+    }
 
+    object[[2]]$color <- red_if_circular(object[[2]])
+
+    visNetwork(object[[1]], object[[2]], width = width, height = height) %>%
+        visEdges(arrows = "from") %>%
+        visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+        visInteraction(dragNodes = !block) %>%
+        visPhysics(
+            solver = "repulsion",
+            stabilization = list(
+                enabled = FALSE,
+                iterations = 5000,
+                onlyDynamicEdges = FALSE
+            )
+        )
+}
 
 #' Launch shiny app
 #' 
